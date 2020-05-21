@@ -2,14 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itheima.dao.IProductDao">
 
-    <sql id="productList">
+    <sql id="productSql">
         id,productNum,productName,cityName,departureTime,productPrice,productDesc,productStatus
     </sql>
 
-    <select id="findAll" resultType="com.itheima.domain.Product">
+    <!--根据productNum查询产品信息-->
+    <select id="findByNum" parameterType="java.lang.String" resultType="com.itheima.domain.Product">
         select
-        <include refid="productList"></include>
-        from product
+        <include refid="productSql"></include>
+        from product where productNum=#{productNum}
     </select>
 
+    <!--添加产品信息-->
+    <insert id="addProduct" parameterType="com.itheima.domain.Product">
+        insert into product(id,productNum,productName,cityName,departureTime,productPrice,productDesc,productStatus)
+        values(#{id},#{productNum},#{productName},#{cityName},#{departureTime},#{productPrice},#{productDesc},#{productStatus})
+    </insert>
+
+    <!--查询全部产品信息-->
+    <select id="findAll" resultType="com.itheima.domain.Product">
+        select
+        <include refid="productSql"></include>
+        from product
+    </select>
 </mapper>

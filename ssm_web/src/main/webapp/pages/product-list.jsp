@@ -72,7 +72,7 @@
                         <div class="pull-left">
                             <div class="form-group form-inline">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</button>
+                                    <a href="${pageContext.request.contextPath}/pages/product-add.jsp" type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</a>
                                     <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
                                     <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
                                 </div>
@@ -92,14 +92,14 @@
                                     <th class="" style="padding-right:0px;">
                                         <input id="selall" type="checkbox" class="icheckbox_square-blue">
                                     </th>
-                                    <th name="id">产品ID</th>
-                                    <th name="productNum">产品编号</th>
-                                    <th name="productName">产品名称</th>
-                                    <th name="cityName">出发城市</th>
-                                    <th name="departureTime">出发时间</th>
-                                    <th name="productPrice">产品价格</th>
-                                    <th name="productDesc">产品描述</th>
-                                    <th name="productStatus">状态</th>
+                                    <th>产品ID</th>
+                                    <th>产品编号</th>
+                                    <th>产品名称</th>
+                                    <th>出发城市</th>
+                                    <th>出发时间</th>
+                                    <th>产品价格</th>
+                                    <th>产品描述</th>
+                                    <th>状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -134,8 +134,8 @@
                 <div class="box-footer">
                     <div class="pull-left">
                         <div class="form-group form-inline">
-                            总共2 页，共14 条数据。 每页
-                            <select class="form-control">
+                            总共${pageInfo.pages}页，共${pageInfo.total}条数据。 每页
+                            <select id="selectbypage" class="form-control">
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -144,21 +144,18 @@
                             </select> 条
                         </div>
                     </div>
-
                     <div class="box-tools pull-right">
                         <ul class="pagination">
                             <li>
-                                <a href="#" aria-label="Previous">首页</a>
+                                <a href="${pageContext.request.contextPath}/product/findAll.do?page=1&size=${pageInfo.pageSize}" aria-label="Previous">首页</a>
                             </li>
-                            <li><a href="#">上一页</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">下一页</a></li>
+                            <li><a href="${pageContext.request.contextPath}/product/findAll.do?page=${pageInfo.prePage}&size=${pageInfo.pageSize}">上一页</a></li>
+                            <c:forEach begin="1" end="${pageInfo.pages}" var="item">
+                                <li><a href="${pageContext.request.contextPath}/product/findAll.do?page=${item}&size=${pageInfo.pageSize}">${item}</a></li>
+                            </c:forEach>
+                            <li><a href="${pageContext.request.contextPath}/product/findAll.do?page=${pageInfo.nextPage}&size=${pageInfo.pageSize}">下一页</a></li>
                             <li>
-                                <a href="#" aria-label="Next">尾页</a>
+                                <a href="${pageContext.request.contextPath}/product/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}" aria-label="Next">尾页</a>
                             </li>
                         </ul>
                     </div>
@@ -226,6 +223,18 @@
         // WYSIHTML5编辑器
         $(".textarea").wysihtml5({
             locale: 'zh-CN'
+        });
+
+        //设置每页显示条数
+        var opts = $('#selectbypage').find('option');
+        opts.each(function () {
+            if($(this).val() == ${pageInfo.pageSize}) {
+                $(this).attr('selected', true);
+            }
+        });
+        $("#selectbypage").click(function () {
+            var selectpage = $("#selectbypage").val();
+            location.href="${pageContext.request.contextPath}/product/findAll.do?page=1&size="+selectpage;
         });
     });
     // 设置激活菜单
