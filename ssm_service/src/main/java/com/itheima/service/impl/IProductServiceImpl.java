@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +21,27 @@ public class IProductServiceImpl implements IProductService {
 
     @Autowired
     private IProductDao productDao;
+
+    /**
+     * 修改产品信息
+     * @param product
+     * @throws Exception
+     */
+    @Override
+    public void updateProduct(Product product) throws Exception {
+        productDao.updateProduct(product);
+    }
+
+    /**
+     * 根据id查询产品信息
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Product findById(String id) throws Exception {
+        return productDao.findById(id);
+    }
 
     /**
      * 根据productNum查询产品信息

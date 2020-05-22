@@ -1,6 +1,5 @@
 package com.itheima.web;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.itheima.domain.Product;
 import com.itheima.service.IProductService;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -24,19 +22,44 @@ public class ProductController {
     IProductService productService;
 
     /**
+     * 修改产品信息
+     * @param product
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/updateProduct.do")
+    public String updateProduct(Product product) throws Exception {
+        productService.updateProduct(product);
+        return "redirect:findAll.do";
+    }
+
+    /**
+     * 根据id查询产品信息
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/findById.do")
+    public ModelAndView findById(@RequestParam(value = "id",required = false) String id) throws Exception{
+        ModelAndView mv = new ModelAndView();
+        Product productById = productService.findById(id);
+        mv.addObject("productById",productById);
+        mv.setViewName("product-update");
+        return mv;
+    }
+
+    /**
      * 添加产品信息
      * @param product
-     * @param response
      * @return
      * @throws Exception
      */
     @RequestMapping("/addProduct.do")
-    public String addProduct(Product product, HttpServletResponse response) throws Exception{
+    public String addProduct(Product product) throws Exception{
         Product productByNum = productService.findByNum(product.getProductNum());
-        if (productByNum != null){
-            response.getWriter().write("<script>alert('商品已经在列表里了，不要重复添加');window.location='findAll.do'; window.close();</script>");
+        if (productByNum == null){
+            productService.addProduct(product);
         }
-        productService.addProduct(product);
         return "redirect:findAll.do";
     }
 

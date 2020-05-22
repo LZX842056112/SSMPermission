@@ -6,6 +6,19 @@
         id,productNum,productName,cityName,departureTime,productPrice,productDesc,productStatus
     </sql>
 
+    <update id="updateProduct" parameterType="com.itheima.domain.Product">
+        update product
+        set productNum=#{productNum},productName=#{productName},cityName=#{cityName},departureTime=#{departureTime},productPrice=#{productPrice},productDesc=#{productDesc},productStatus=#{productStatus}
+        where id=#{id}
+    </update>
+
+    <!--根据id查询产品信息-->
+    <select id="findById" parameterType="java.lang.String" resultType="com.itheima.domain.Product">
+        select
+        <include refid="productSql"></include>
+        from product where id=#{id}
+    </select>
+
     <!--根据productNum查询产品信息-->
     <select id="findByNum" parameterType="java.lang.String" resultType="com.itheima.domain.Product">
         select

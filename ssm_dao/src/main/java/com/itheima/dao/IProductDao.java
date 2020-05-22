@@ -11,6 +11,21 @@ import java.util.List;
 public interface IProductDao {
 
     /**
+     * 修改产品信息
+     * @param product
+     * @throws Exception
+     */
+    public void updateProduct(Product product) throws Exception;
+
+    /**
+     * 根据id查询产品信息
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public Product findById(String id) throws Exception;
+
+    /**
      * 根据productNum查询产品信息
      * @param productNum
      * @return
