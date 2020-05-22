@@ -6,6 +6,10 @@
         id,productNum,productName,cityName,departureTime,productPrice,productDesc,productStatus
     </sql>
 
+    <delete id="deleteById" parameterType="java.lang.String">
+        delete from product where id=#{id}
+    </delete>
+
     <update id="updateProduct" parameterType="com.itheima.domain.Product">
         update product
         set productNum=#{productNum},productName=#{productName},cityName=#{cityName},departureTime=#{departureTime},productPrice=#{productPrice},productDesc=#{productDesc},productStatus=#{productStatus}

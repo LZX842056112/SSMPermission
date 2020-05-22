@@ -22,6 +22,17 @@ public class ProductController {
     IProductService productService;
 
     /**
+     * 产品删除
+     * @param id
+     * @return
+     */
+    @RequestMapping("/deleteById.do")
+    public String deleteById(@RequestParam(value = "id",required = false) String id) throws Exception {
+        productService.deleteById(id);
+        return "redirect:findAll.do";
+    }
+
+    /**
      * 修改产品信息
      * @param product
      * @return

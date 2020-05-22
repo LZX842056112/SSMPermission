@@ -11,6 +11,13 @@ import java.util.List;
 public interface IProductDao {
 
     /**
+     * 产品删除
+     * @param id
+     * @throws Exception
+     */
+    public void deleteById(String id) throws Exception;
+
+    /**
      * 修改产品信息
      * @param product
      * @throws Exception

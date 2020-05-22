@@ -117,7 +117,7 @@
                                         <td>${product.productStatusStr}</td>
                                         <td class="text-center">
                                             <a href="${pageContext.request.contextPath}/product/findById.do?id=${product.id}" class="btn bg-olive btn-xs">编辑</a>
-                                            <button type="button" class="btn bg-olive btn-xs">删除</button>
+                                            <a onclick="delById('${product.id}')" class="btn bg-olive btn-xs">删除</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -216,6 +216,13 @@
 <script src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
+    //删除单条数据
+    function delById(id){
+        if(confirm("确定要删除该条数据吗？")){
+            location.href="${pageContext.request.contextPath}/product/deleteById.do?id="+id;
+        }
+    }
+
     $(document).ready(function() {
         // 选择框
         $(".select2").select2();

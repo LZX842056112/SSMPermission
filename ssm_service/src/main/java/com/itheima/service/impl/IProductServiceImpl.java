@@ -23,6 +23,16 @@ public class IProductServiceImpl implements IProductService {
     private IProductDao productDao;
 
     /**
+     * 产品删除
+     * @param id
+     * @throws Exception
+     */
+    @Override
+    public void deleteById(String id) throws Exception {
+        productDao.deleteById(id);
+    }
+
+    /**
      * 修改产品信息
      * @param product
      * @throws Exception
