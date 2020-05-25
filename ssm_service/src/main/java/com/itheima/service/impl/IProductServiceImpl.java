@@ -29,7 +29,9 @@ public class IProductServiceImpl implements IProductService {
      */
     @Override
     public void deleteById(String id) throws Exception {
-        productDao.deleteById(id);
+        if (id != null && id.length() > 0){
+            productDao.deleteById(id);
+        }
     }
 
     /**
@@ -61,7 +63,7 @@ public class IProductServiceImpl implements IProductService {
      */
     @Override
     public Product findByNum(String productNum) throws Exception {
-        if (productNum != null){
+        if (productNum != null && productNum.length() > 0){
             Product product = productDao.findByNum(productNum);
             if (product != null){
                 return product;

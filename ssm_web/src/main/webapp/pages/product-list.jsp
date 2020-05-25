@@ -73,7 +73,7 @@
                             <div class="form-group form-inline">
                                 <div class="btn-group">
                                     <a href="${pageContext.request.contextPath}/pages/product-add.jsp" type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</a>
-                                    <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+                                    <a onclick="delByCheck()" type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</a>
                                     <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                             <tbody>
                                 <c:forEach items="${productList}" var="product">
                                     <tr>
-                                        <td><input name="ids" type="checkbox"></td>
+                                        <td><input value="${product.id}" name="ids" type="checkbox"></td>
                                         <td>${product.id}</td>
                                         <td>${product.productNum}</td>
                                         <td>${product.productName}</td>
@@ -216,6 +216,16 @@
 <script src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
+    //删除多条数据
+    function delByCheck() {
+        $("input:checkbox[name=ids]:checked").each(function () {
+            var id = $(this).val()
+            if(confirm("确定要删除id为("+id+")的数据吗？")){
+                location.href="${pageContext.request.contextPath}/product/deleteById.do?id="+id;
+            }
+        });
+    }
+
     //删除单条数据
     function delById(id){
         if(confirm("确定要删除该条数据吗？")){
