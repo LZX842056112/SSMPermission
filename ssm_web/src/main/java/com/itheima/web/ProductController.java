@@ -5,10 +5,13 @@ import com.itheima.domain.Product;
 import com.itheima.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -76,16 +79,17 @@ public class ProductController {
     }
 
     /**
-     * 查询全部产品信息
+     * 查询全部产品信息，模糊查询
      * @return
      * @throws Exception
      */
-    @RequestMapping("/findAll.do")
-    public ModelAndView findAll(@RequestParam(value = "page",defaultValue = "1",required = false)Integer page,@RequestParam(value = "size",defaultValue = "4",required = false) Integer size) throws Exception{
+    @RequestMapping(value = "/findAll.do",produces="text/html;charset=UTF-8")
+    public ModelAndView findAll(@RequestParam(value = "page",defaultValue = "1",required = false)String page, @RequestParam(value = "size",defaultValue = "4",required = false) String size, @RequestParam(value = "fuzzyName",defaultValue = "",required = false) String fuzzyName) throws Exception{
         ModelAndView mv = new ModelAndView();
-        List<Product> productList = productService.findAll(page.intValue(),size.intValue());
+        List<Product> productList = productService.findAll(Integer.parseInt(page),Integer.parseInt(size),fuzzyName);
         PageInfo pageInfo = new PageInfo(productList);
         mv.addObject("productList",productList);
+        mv.addObject("fuzzyName",fuzzyName);
         mv.addObject("pageInfo",pageInfo);
         mv.setViewName("product-list");
         return mv;

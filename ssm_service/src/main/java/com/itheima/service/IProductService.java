@@ -48,9 +48,9 @@ public interface IProductService {
     public void addProduct(Product product) throws Exception;
 
     /**
-     * 查询全部产品信息
+     * 查询全部产品信息，模糊查询
      * @return
      * @throws Exception
      */
-    public List<Product> findAll(int page,int size) throws Exception;
+    public List<Product> findAll(int page,int size,String fuzzyName) throws Exception;
 }

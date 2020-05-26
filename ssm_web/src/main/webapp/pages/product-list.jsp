@@ -74,14 +74,16 @@
                                 <div class="btn-group">
                                     <a href="${pageContext.request.contextPath}/pages/product-add.jsp" type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</a>
                                     <a onclick="delByCheck()" type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</a>
-                                    <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
+                                    <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
                                 </div>
                             </div>
                         </div>
                         <div class="box-tools pull-right">
                             <div class="has-feedback">
-                                <input type="text" class="form-control input-sm" placeholder="搜索">
-                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                <form action="${pageContext.request.contextPath}/product/findAll.do" method="post">
+                                    <input type="text" name="fuzzyName" class="form-control input-sm" value="${fuzzyName}" placeholder="产品名称搜索"/>
+                                    <span type="submit" class="bg-maroon glyphicon glyphicon-search form-control-feedback"></span>
+                                </form>
                             </div>
                         </div>
                         <!--工具栏/-->
@@ -146,15 +148,15 @@
                     <div class="box-tools pull-right">
                         <ul class="pagination">
                             <li>
-                                <a href="${pageContext.request.contextPath}/product/findAll.do?page=1&size=${pageInfo.pageSize}" aria-label="Previous">首页</a>
+                                <a href="${pageContext.request.contextPath}/product/findAll.do?page=1&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}" aria-label="Previous">首页</a>
                             </li>
-                            <li><a href="${pageContext.request.contextPath}/product/findAll.do?page=${pageInfo.prePage}&size=${pageInfo.pageSize}">上一页</a></li>
+                            <li><a href="${pageContext.request.contextPath}/product/findAll.do?page=${pageInfo.prePage}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">上一页</a></li>
                             <c:forEach begin="1" end="${pageInfo.pages}" var="item">
-                                <li><a href="${pageContext.request.contextPath}/product/findAll.do?page=${item}&size=${pageInfo.pageSize}">${item}</a></li>
+                                <li><a href="${pageContext.request.contextPath}/product/findAll.do?page=${item}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">${item}</a></li>
                             </c:forEach>
-                            <li><a href="${pageContext.request.contextPath}/product/findAll.do?page=${pageInfo.nextPage}&size=${pageInfo.pageSize}">下一页</a></li>
+                            <li><a href="${pageContext.request.contextPath}/product/findAll.do?page=${pageInfo.nextPage}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">下一页</a></li>
                             <li>
-                                <a href="${pageContext.request.contextPath}/product/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}" aria-label="Next">尾页</a>
+                                <a href="${pageContext.request.contextPath}/product/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}" aria-label="Next">尾页</a>
                             </li>
                         </ul>
                     </div>
@@ -250,7 +252,7 @@
         });
         $("#selectbypage").click(function () {
             var selectpage = $("#selectbypage").val();
-            location.href="${pageContext.request.contextPath}/product/findAll.do?page=1&size="+selectpage;
+            location.href="${pageContext.request.contextPath}/product/findAll.do?page=1&size="+selectpage+"&fuzzyName=${fuzzyName}";
         });
     });
     // 设置激活菜单

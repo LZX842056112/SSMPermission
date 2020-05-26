@@ -37,9 +37,14 @@
     </insert>
 
     <!--查询全部产品信息-->
-    <select id="findAll" resultType="com.itheima.domain.Product">
+    <select id="findAll" parameterType="java.lang.String" resultType="com.itheima.domain.Product">
         select
         <include refid="productSql"></include>
         from product
+        <where>
+            <if test="fuzzyName!=null and fuzzyName!=''">
+                and productName like concat('%',#{fuzzyName},'%')
+            </if>
+        </where>
     </select>
 </mapper>

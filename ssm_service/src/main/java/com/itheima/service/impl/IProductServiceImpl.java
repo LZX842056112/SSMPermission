@@ -29,7 +29,7 @@ public class IProductServiceImpl implements IProductService {
      */
     @Override
     public void deleteById(String id) throws Exception {
-        if (id != null && id.length() > 0){
+        if (id != null && id != "" && id.length() > 0){
             productDao.deleteById(id);
         }
     }
@@ -52,7 +52,10 @@ public class IProductServiceImpl implements IProductService {
      */
     @Override
     public Product findById(String id) throws Exception {
-        return productDao.findById(id);
+        if (id != null && id != "" && id.length() > 0){
+            return productDao.findById(id);
+        }
+        return null;
     }
 
     /**
@@ -86,14 +89,14 @@ public class IProductServiceImpl implements IProductService {
     }
 
     /**
-     * 查询全部产品信息
+     * 查询全部产品信息，模糊查询
      * @return
      * @throws Exception
      */
     @Override
-    public List<Product> findAll(int page,int size) throws Exception {
+    public List<Product> findAll(int page,int size,String fuzzyName) throws Exception {
         //分页
         PageHelper.startPage(page,size);
-        return productDao.findAll();
+        return productDao.findAll(fuzzyName);
     }
 }
