@@ -80,10 +80,13 @@ public class ProductController {
 
     /**
      * 查询全部产品信息，模糊查询
+     * @param page
+     * @param size
+     * @param fuzzyName
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/findAll.do",produces="text/html;charset=UTF-8")
+    @RequestMapping(value = "/findAll.do",produces = "text/html;charset=UTF-8")
     public ModelAndView findAll(@RequestParam(value = "page",defaultValue = "1",required = false)String page, @RequestParam(value = "size",defaultValue = "4",required = false) String size, @RequestParam(value = "fuzzyName",defaultValue = "",required = false) String fuzzyName) throws Exception{
         ModelAndView mv = new ModelAndView();
         List<Product> productList = productService.findAll(Integer.parseInt(page),Integer.parseInt(size),fuzzyName);

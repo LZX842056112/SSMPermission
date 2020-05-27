@@ -1,6 +1,7 @@
 package com.itheima.dao;
 
 import com.itheima.domain.Product;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -48,9 +49,9 @@ public interface IProductDao {
     public void addProduct(Product product) throws Exception;
 
     /**
-     * 查询全部产品信息
+     * 查询全部产品信息，模糊查询
      * @return
      * @throws Exception
      */
-    public List<Product> findAll() throws Exception;
+    public List<Product> findAll(@Param("fuzzyName") String fuzzyName) throws Exception;
 }

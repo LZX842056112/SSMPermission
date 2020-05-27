@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * @author LiZongXiao
  * @create 2020/5/15 19:35
- * 产品
+ * 产品表
  */
 public class Product {
     private String id;// 主键
@@ -64,6 +64,7 @@ public class Product {
     }
 
     public String getDepartureTimeStr() {
+        //日期转换成字符串
         departureTimeStr = DateUtils.datetoString(departureTime,DateUtils.DATE_YYYY_MM_DD);
         return departureTimeStr;
     }
