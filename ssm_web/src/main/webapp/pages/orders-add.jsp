@@ -6,7 +6,7 @@
     <!-- 页面meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>订单列表</title>
+    <title>订单添加</title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
     <!-- Tell the browser to be responsive to screen width -->
@@ -49,120 +49,90 @@
         <section class="content-header">
             <h1>
                 订单管理
-                <small>订单列表</small>
+                <small>订单添加</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="${pageContext.request.contextPath}/pages/main.jsp"><i class="fa fa-dashboard"></i> 首页</a></li>
                 <li><a href="${pageContext.request.contextPath}/orders/findAll.do">订单管理</a></li>
-                <li class="active">订单列表</li>
+                <li class="active">订单添加</li>
             </ol>
         </section>
         <!-- 内容头部 /-->
         <!-- 正文区域 -->
         <section class="content">
-            <!-- .box-body -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">订单列表</h3>
-                </div>
-                <div class="box-body">
-                    <!-- 数据表格 -->
-                    <div class="table-box">
-                        <!--工具栏-->
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                <div class="btn-group">
-                                    <a href="${pageContext.request.contextPath}/orders/selectproAndMen.do" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</a>
-                                    <a onclick="delByCheck()" type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</a>
-                                    <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+            <div class="box-body">
+                <!--tab页-->
+                <div class="nav-tabs-custom">
+                    <!--tab内容-->
+                    <div class="tab-content">
+                        <!--label显示的内容-->
+                        <div class="tab-pane active" id="tab-label">
+                            <form action="${pageContext.request.contextPath}/orders/addOrders.do" method="post">
+                                <div class="row data-type">
+                                    <div class="col-md-2 title">订单编号</div>
+                                    <div class="col-md-4 data">
+                                        <input type="text" class="form-control" name="orderNum"/>
+                                    </div>
+                                    <div class="col-md-2 title">下单时间</div>
+                                    <div class="col-md-4 data">
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right" name="orderTime" id="dateTimePicker">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 title">出行人数</div>
+                                    <div class="col-md-4 data">
+                                        <input type="text" class="form-control" name="peopleCount"/>
+                                    </div>
+                                    <div class="col-md-2 title">产品名称</div>
+                                    <div class="col-md-4 data">
+                                        <select name="productId" class="form-control" style="width: 100%;">
+                                            <c:forEach items="${productList}" var="product">
+                                                <option value="${product.id}">${product.productName}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 title">会员信息</div>
+                                    <div class="col-md-4 data">
+                                        <select name="memberId" class="form-control" style="width: 100%;">
+                                            <c:forEach items="${memberList}" var="member">
+                                                <option value="${member.id}">${member.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 title">订单状态</div>
+                                    <div class="col-md-4 data">
+                                        <div class="form-group form-inline">
+                                            <div class="radio"><label><input type="radio" name="orderStatus" value="0"> 未支付</label></div>
+                                            <div class="radio"><label><input type="radio" name="orderStatus" value="1"> 已支付</label></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 title">支付方式</div>
+                                    <div class="col-md-4 data">
+                                        <div class="form-group form-inline">
+                                            <div class="radio"><label><input type="radio" name="payType" value="0"> 支付宝</label></div>
+                                            <div class="radio"><label><input type="radio" name="payType" value="1"> 微信</label></div>
+                                            <div class="radio"><label><input type="radio" name="payType" value="2"> 其他</label></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 title rowHeight2x">订单描述</div>
+                                    <div class="col-md-4 data rowHeight2x">
+                                        <textarea class="form-control" rows="3" name="orderDesc"></textarea>
+                                    </div>
+                                    <div class="col-md-12 data text-center">
+                                        <button type="submit" class="btn bg-maroon">添加</button>
+                                        <button type="button" class="btn bg-default" onclick="history.back(-1);">返回</button>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                        <div class="box-tools pull-right">
-                            <div class="has-feedback">
-                                <form action="${pageContext.request.contextPath}/orders/findAll.do" method="post">
-                                    <input type="text" name="fuzzyName" class="form-control input-sm" value="${fuzzyName}" placeholder="订单名称搜索"/>
-                                    <span type="submit" class="bg-maroon glyphicon glyphicon-search form-control-feedback"></span>
-                                </form>
-                            </div>
-                        </div>
-                        <!--工具栏/-->
-                        <!--数据列表-->
-                        <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
-                            <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="selall" type="checkbox" class="icheckbox_square-blue">
-                                    </th>
-                                    <th>订单ID</th>
-                                    <th>订单编号</th>
-                                    <th>产品名称</th>
-                                    <th>下单时间</th>
-                                    <th>会员姓名</th>
-                                    <th>出行人数</th>
-                                    <th>支付方式</th>
-                                    <th>订单状态</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${ordersList}" var="order">
-                                    <tr>
-                                        <td><input value="${order.id}" name="ids" type="checkbox"></td>
-                                        <td>${order.id}</td>
-                                        <td>${order.orderNum}</td>
-                                        <td>${order.product.productName}</td>
-                                        <td>${order.orderTimeStr}</td>
-                                        <td>${order.member.name}</td>
-                                        <td>${order.peopleCount}</td>
-                                        <td>${order.payTypeStr}</td>
-                                        <td>${order.orderStatusStr}</td>
-                                        <td class="text-center">
-                                            <a href="${pageContext.request.contextPath}/orders/findById.do?id=${order.id}" class="btn bg-olive btn-xs">详情</a>
-                                            <a href="${pageContext.request.contextPath}/orders/findById.do?id=${order.id}" class="btn bg-olive btn-xs">编辑</a>
-                                            <a onclick="delById('${order.id}')" class="btn bg-olive btn-xs">删除</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                        <!--数据列表/-->
+                        <!--label显示的内容/-->
                     </div>
-                    <!-- 数据表格 /-->
+                    <!--tab内容/-->
                 </div>
-                <!-- /.box-body -->
-
-                <!-- .box-footer-->
-                <div class="box-footer">
-                    <div class="pull-left">
-                        <div class="form-group form-inline">
-                            总共${pageInfo.pages}页，共${pageInfo.total}条数据。 每页
-                            <select id="selectbypage" class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select> 条
-                        </div>
-                    </div>
-                    <div class="box-tools pull-right">
-                        <ul class="pagination">
-                            <li>
-                                <a href="${pageContext.request.contextPath}/orders/findAll.do?page=1&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}" aria-label="Previous">首页</a>
-                            </li>
-                            <li><a href="${pageContext.request.contextPath}/orders/findAll.do?page=${pageInfo.prePage}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">上一页</a></li>
-                            <c:forEach begin="1" end="${pageInfo.pages}" var="item">
-                                <li><a href="${pageContext.request.contextPath}/orders/findAll.do?page=${item}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">${item}</a></li>
-                            </c:forEach>
-                            <li><a href="${pageContext.request.contextPath}/orders/findAll.do?page=${pageInfo.nextPage}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">下一页</a></li>
-                            <li>
-                                <a href="${pageContext.request.contextPath}/orders/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}" aria-label="Next">尾页</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /.box-footer-->
+                <!--tab页/-->
             </div>
         </section>
         <!-- 正文区域 /-->
@@ -219,41 +189,12 @@
 <script src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
-    //删除多条数据
-    function delByCheck() {
-        $("input:checkbox[name=ids]:checked").each(function () {
-            var id = $(this).val()
-            if(confirm("确定要删除id为("+id+")的数据吗？")){
-                location.href="${pageContext.request.contextPath}/orders/deleteById.do?id="+id;
-            }
-        });
-    }
-
-    //删除单条数据
-    function delById(id){
-        if(confirm("确定要删除该条数据吗？")){
-            location.href="${pageContext.request.contextPath}/orders/deleteById.do?id="+id;
-        }
-    }
-
     $(document).ready(function() {
         // 选择框
         $(".select2").select2();
         // WYSIHTML5编辑器
         $(".textarea").wysihtml5({
             locale: 'zh-CN'
-        });
-
-        //设置每页显示条数
-        var opts = $('#selectbypage').find('option');
-        opts.each(function () {
-            if($(this).val() == ${pageInfo.pageSize}) {
-                $(this).attr('selected', true);
-            }
-        });
-        $("#selectbypage").click(function () {
-            var selectpage = $("#selectbypage").val();
-            location.href="${pageContext.request.contextPath}/orders/findAll.do?page=1&size="+selectpage+"&fuzzyName=${fuzzyName}";
         });
     });
     // 设置激活菜单
@@ -265,6 +206,16 @@
         }
     }
     $(document).ready(function() {
+        // datetime picker
+        $('#dateTimePicker').datetimepicker({
+            format: "yyyy-mm-dd hh:ii",
+            autoclose: true,
+            todayBtn: true,
+            language: 'zh-CN'
+        });
+    });
+
+    $(document).ready(function() {
         // 激活导航位置
         setSidebarActive("admin-datalist");
         // 列表按钮
@@ -272,7 +223,7 @@
             checkboxClass: 'icheckbox_square-blue',
             increaseArea: '20%'
         });
-        // 全选操作
+        // 全选操作 
         $("#selall").click(function() {
             var clicks = $(this).is(':checked');
             if (!clicks) {

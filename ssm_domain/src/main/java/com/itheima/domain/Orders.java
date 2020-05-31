@@ -2,7 +2,6 @@ package com.itheima.domain;
 
 import com.itheima.utils.DateUtils;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 import java.util.List;
 
@@ -14,12 +13,12 @@ import java.util.List;
 public class Orders {
     private String id;//无意义、主键uuid
     private String orderNum;//订单编号 不为空 唯一
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date orderTime;//下单时间
     private String orderTimeStr;
-    private int orderStatus;//订单状态(0 未支付 1 已支付)
+    private Integer orderStatus;//订单状态(0 未支付 1 已支付)
     private String orderStatusStr;
-    private int peopleCount;//出行人数
+    private Integer peopleCount;//出行人数
     private Product product;//产品信息，多对一
     private List<Traveller> travellers;//旅客信息，一对多
     private Member member;//会员信息，多对一
@@ -52,8 +51,10 @@ public class Orders {
     }
 
     public String getOrderTimeStr() {
-        //日期转换成字符串
-        orderTimeStr = DateUtils.datetoString(orderTime,DateUtils.DATE_YYYY_MM_DD);
+        if(orderTime != null){
+            //日期转换成字符串
+            orderTimeStr = DateUtils.datetoString(orderTime,DateUtils.DATE_YYYY_MM_DD);
+        }
         return orderTimeStr;
     }
 

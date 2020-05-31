@@ -6,10 +6,12 @@
         id,productNum,productName,cityName,departureTime,productPrice,productDesc,productStatus
     </sql>
 
+    <!--根据id删除产品信息-->
     <delete id="deleteById" parameterType="java.lang.String">
         delete from product where id=#{id}
     </delete>
 
+    <!--修改产品信息-->
     <update id="updateProduct" parameterType="com.itheima.domain.Product">
         update product
         set productNum=#{productNum},productName=#{productName},cityName=#{cityName},departureTime=#{departureTime},productPrice=#{productPrice},productDesc=#{productDesc},productStatus=#{productStatus}
@@ -20,14 +22,14 @@
     <select id="findById" parameterType="java.lang.String" resultType="com.itheima.domain.Product">
         select
         <include refid="productSql"></include>
-        from product where id=#{id}
+        from product where id=#{id} limit 1
     </select>
 
     <!--根据productNum查询产品信息-->
     <select id="findByNum" parameterType="java.lang.String" resultType="com.itheima.domain.Product">
         select
         <include refid="productSql"></include>
-        from product where productNum=#{productNum}
+        from product where productNum=#{productNum} limit 1
     </select>
 
     <!--添加产品信息-->

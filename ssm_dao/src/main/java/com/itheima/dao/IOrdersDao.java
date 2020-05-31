@@ -10,6 +10,22 @@ import java.util.List;
  * @create 2020/5/26 19:23
  */
 public interface IOrdersDao {
+
+    /**
+     * 订单添加
+     * @param orders
+     * @throws Exception
+     */
+    public void addOrders(Orders orders) throws Exception;
+
+    /**
+     * 根据订单编号查找订单
+     * @param orderNum
+     * @return
+     * @throws Exception
+     */
+    public String findByNum(String orderNum) throws Exception;
+
     /**
      * 订单全部查询，模糊查询
      * @param fuzzyName
