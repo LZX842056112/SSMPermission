@@ -12,6 +12,14 @@ import java.util.List;
 public interface IOrdersDao {
 
     /**
+     * 订单详情
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public Orders findById(String id) throws Exception;
+
+    /**
      * 订单添加
      * @param orders
      * @throws Exception

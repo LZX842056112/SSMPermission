@@ -29,6 +29,28 @@ public class OrdersController {
     @Autowired
     IMemberService memberService;
 
+    @RequestMapping("/findAllById.do")
+    public ModelAndView findAllById(@RequestParam(value = "id",required = true) String id){
+        ModelAndView mv = new ModelAndView();
+
+        return mv;
+    }
+
+    /**
+     * 订单详情
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/findById.do")
+    public ModelAndView findById(@RequestParam(value = "id",required = true) String id) throws Exception {
+        ModelAndView mv = new ModelAndView();
+        Orders ordersList = ordersService.findById(id);
+        mv.addObject("ordersList",ordersList);
+        mv.setViewName("orders-show");
+        return mv;
+    }
+
     /**
      * 订单添加
      * @param orders

@@ -22,6 +22,20 @@ public class IOrdersServiceImpl implements IOrdersService {
     IOrdersDao ordersDao;
 
     /**
+     * 订单详情
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Orders findById(String id) throws Exception {
+        if (id != null && id != "" && id.length() > 0){
+            return ordersDao.findById(id);
+        }
+       return null;
+    }
+
+    /**
      * 订单添加
      * @param orders
      * @throws Exception
