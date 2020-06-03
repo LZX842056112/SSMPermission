@@ -26,6 +26,24 @@ public class ProductController {
     IProductService productService;
 
     /**
+     * 产品批量删除
+     * @param idStr
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/deleteByIdStr.do")
+    public String deleteByIdStr(@RequestParam(value = "idStr",defaultValue = "",required = false)String idStr) throws Exception {
+        if (idStr != null && idStr != "" && idStr.length()>0){
+            String[] ids = idStr.split(",");
+            for (String id : ids) {
+                System.out.println(id);
+                productService.deleteById(id);
+            }
+        }
+        return "redirect:findAll.do";
+    }
+
+    /**
      * 产品删除
      * @param id
      * @return
