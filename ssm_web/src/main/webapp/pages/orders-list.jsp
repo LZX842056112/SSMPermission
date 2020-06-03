@@ -221,13 +221,12 @@
 <script>
     //删除多条数据
     function delByCheck() {
-        var str="";
-        if(confirm("确定要删除该条数据吗？")){
-            $("input:checkbox[name=ids]:checked").each(function () {
-                str += $(this).val()+",";
-                location.href="${pageContext.request.contextPath}/orders/deleteByIdStr.do?idStr="+str;
-            });
-        }
+        $("input:checkbox[name=ids]:checked").each(function () {
+            var id = $(this).val()
+            if(confirm("确定要删除id为("+id+")的数据吗？")){
+                location.href="${pageContext.request.contextPath}/orders/deleteById.do?id="+id;
+            }
+        });
     }
 
     //删除单条数据
@@ -252,7 +251,6 @@
                 $(this).attr('selected', true);
             }
         });
-        //页码选中
         $("#selectbypage").click(function () {
             var selectpage = $("#selectbypage").val();
             location.href="${pageContext.request.contextPath}/orders/findAll.do?page=1&size="+selectpage+"&fuzzyName=${fuzzyName}";
