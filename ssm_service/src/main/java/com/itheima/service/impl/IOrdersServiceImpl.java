@@ -22,6 +22,16 @@ public class IOrdersServiceImpl implements IOrdersService {
     IOrdersDao ordersDao;
 
     /**
+     * 订单删除
+     * @param id
+     * @throws Exception
+     */
+    @Override
+    public void deleteById(String id) throws Exception {
+        ordersDao.deleteById(id);
+    }
+
+    /**
      * 订单修改
      * @param orders
      * @throws Exception
