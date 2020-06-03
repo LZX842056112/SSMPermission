@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itheima.dao.IOrdersDao">
 
+    <!--订单修改-->
+    <update id="updateOrders" parameterType="com.itheima.domain.Orders">
+        update orders
+        set orderNum=#{orderNum},orderTime=#{orderTime},peopleCount=#{peopleCount},orderDesc=#{orderDesc},payType=#{payType},orderStatus=#{orderStatus},productId=#{product.id},memberId=#{member.id}
+        where id=#{id}
+    </update>
+
     <!--订单详情-->
     <resultMap id="selorders" type="com.itheima.domain.Orders">
         <id column="id" property="id"></id>
@@ -44,7 +51,7 @@
         left join traveller t on t.id=ot.travellerId
         left join product p on o.productId=p.id
         left join member m on o.memberId=m.id
-        where o.id=#{id}
+        where o.id=#{id} limit 1
     </select>
 
     <!--订单添加-->

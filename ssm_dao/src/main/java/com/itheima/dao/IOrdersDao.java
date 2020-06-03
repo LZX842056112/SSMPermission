@@ -2,6 +2,7 @@ package com.itheima.dao;
 
 import com.itheima.domain.Orders;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.core.annotation.Order;
 
 import java.util.List;
 
@@ -10,6 +11,13 @@ import java.util.List;
  * @create 2020/5/26 19:23
  */
 public interface IOrdersDao {
+
+    /**
+     * 订单修改
+     * @param orders
+     * @throws Exception
+     */
+    public void updateOrders(Orders orders) throws Exception;
 
     /**
      * 订单详情

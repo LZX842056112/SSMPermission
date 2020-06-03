@@ -29,10 +29,36 @@ public class OrdersController {
     @Autowired
     IMemberService memberService;
 
-    @RequestMapping("/findAllById.do")
-    public ModelAndView findAllById(@RequestParam(value = "id",required = true) String id){
-        ModelAndView mv = new ModelAndView();
+    /**
+     * 订单修改
+     * @param orders
+     * @return
+     */
+    @RequestMapping("/updateOrders")
+    public String updateOrders(Orders orders,@RequestParam(name = "productId",required = true) String productId,@RequestParam(name = "memberId", required = true) String memberId) throws Exception {
+        Product product = productService.findById(productId);
+        Member member = memberService.findById(memberId);
+        orders.setProduct(product);
+        orders.setMember(member);
+        ordersService.updateOrders(orders);
+        return "redirect:findAll.do";
+    }
 
+    /**
+     * 订单修改前查询信息
+     * @param id
+     * @return
+     */
+    @RequestMapping("/findAllById.do")
+    public ModelAndView findAllById(@RequestParam(value = "id",required = true) String id) throws Exception {
+        ModelAndView mv = new ModelAndView();
+        Orders orders = ordersService.findById(id);
+        List<Product> productList = productService.findAll(0, 0, "");
+        List<Member> memberList = memberService.findAll();
+        mv.addObject("productList",productList);
+        mv.addObject("memberList",memberList);
+        mv.addObject("orders",orders);
+        mv.setViewName("orders-update");
         return mv;
     }
 
