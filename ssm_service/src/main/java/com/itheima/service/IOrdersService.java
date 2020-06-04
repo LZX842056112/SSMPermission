@@ -11,6 +11,13 @@ import java.util.List;
 public interface IOrdersService {
 
     /**
+     * 订单删除
+     * @param id
+     * @throws Exception
+     */
+    public void deleteById(String id) throws Exception;
+
+    /**
      * 订单修改
      * @param orders
      * @throws Exception

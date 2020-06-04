@@ -107,20 +107,20 @@
                                     <div class="col-md-4 data">
                                         <div class="form-group form-inline">
                                             <div class="radio"><label><input <c:if test="${orders.orderStatus == 0}">checked</c:if>
-                                                                            type="radio" name="orderStatus" value="0"> 未支付</label></div>
+                                                                             type="radio" name="orderStatus" value="0"> 未支付</label></div>
                                             <div class="radio"><label><input <c:if test="${orders.orderStatus == 1}">checked</c:if>
-                                                                            type="radio" name="orderStatus" value="1"> 已支付</label></div>
+                                                                             type="radio" name="orderStatus" value="1"> 已支付</label></div>
                                         </div>
                                     </div>
                                     <div class="col-md-2 title">支付方式</div>
                                     <div class="col-md-4 data">
                                         <div class="form-group form-inline">
                                             <div class="radio"><label><input <c:if test="${orders.payType == 0}">checked</c:if>
-                                                                            type="radio" name="payType" value="0"> 支付宝</label></div>
+                                                                             type="radio" name="payType" value="0"> 支付宝</label></div>
                                             <div class="radio"><label><input <c:if test="${orders.payType == 1}">checked</c:if>
-                                                                            type="radio" name="payType" value="1"> 微信</label></div>
+                                                                             type="radio" name="payType" value="1"> 微信</label></div>
                                             <div class="radio"><label><input <c:if test="${orders.payType == 2}">checked</c:if>
-                                                                            type="radio" name="payType" value="2"> 其他</label></div>
+                                                                             type="radio" name="payType" value="2"> 其他</label></div>
                                         </div>
                                     </div>
                                     <div class="col-md-2 title rowHeight2x">订单描述</div>
