@@ -33,14 +33,19 @@
                             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li id="admin-login">
-                            <a href="all-admin-login.html">
-                                <i class="fa fa-circle-o"></i> 登录
+                        <li id="admin-user">
+                            <a href="${pageContext.request.contextPath}/user/findAll.do">
+                                <i class="fa fa-circle-o"></i> 用户管理
                             </a>
                         </li>
-                        <li id="admin-register">
-                            <a href="all-admin-register.html">
-                                <i class="fa fa-circle-o"></i> 注册
+                        <li id="admin-role">
+                            <a href="${pageContext.request.contextPath}/role/findAll.do">
+                                <i class="fa fa-circle-o"></i> 角色管理
+                            </a>
+                        </li>
+                        <li id="admin-permission">
+                            <a href="${pageContext.request.contextPath}/permission/findAll.do">
+                                <i class="fa fa-circle-o"></i> 权限管理
                             </a>
                         </li>
                     </ul>
@@ -50,16 +55,16 @@
                     <a href="#">
                         <i class="fa fa-cube"></i> <span>基础管理</span>
                         <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li id="order-manage">
+                        <li id="order-product">
                             <a href="${pageContext.request.contextPath}/product/findAll.do">
                                 <i class="fa fa-circle-o"></i> 产品管理
                             </a>
                         </li>
-                        <li id="order-cancel">
+                        <li id="order-orders">
                             <a href="${pageContext.request.contextPath}/orders/findAll.do">
                                 <i class="fa fa-circle-o"></i> 订单管理
                             </a>
