@@ -1,5 +1,6 @@
 package com.itheima.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.itheima.dao.IUserDao;
 import com.itheima.domain.Role;
 import com.itheima.domain.UserInfo;
@@ -25,6 +26,22 @@ public class IUserServiceImpl implements IUserService {
 
     @Autowired
     private IUserDao userDao;
+
+    /**
+     * 查询全部用户信息，模糊查询
+     * @param page
+     * @param size
+     * @param fuzzyName
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<UserInfo> findAll(int page,int size,String fuzzyName) throws Exception {
+        //分页
+        PageHelper.startPage(page,size);
+        return userDao.findAll(fuzzyName);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         UserInfo userInfo = null;
