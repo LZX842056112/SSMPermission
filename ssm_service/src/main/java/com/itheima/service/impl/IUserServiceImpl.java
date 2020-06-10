@@ -34,7 +34,7 @@ public class IUserServiceImpl implements IUserService {
             e.printStackTrace();
         }
         //处理自己的用户对象，封装成UserDetails
-        User user = new User(userInfo.getUsername(),userInfo.getPassword(),true,true,true,true,getAuthority(userInfo.getRoles()));
+        User user = new User(userInfo.getUsername(),"{noop}"+userInfo.getPassword(), userInfo.getStatus() == 0 ? false : true, true, true, true, getAuthority(userInfo.getRoles()));
         return user;
     }
 
@@ -46,5 +46,4 @@ public class IUserServiceImpl implements IUserService {
         }
         return list;
     }
-
 }

@@ -22,7 +22,7 @@
         </collection>
     </resultMap>
     <select id="findByUserName" parameterType="java.lang.String" resultType="com.itheima.domain.UserInfo" resultMap="selByName">
-        select u*,r*,p* from users u
+        select u.*,r.*,p.* from users u
         left join users_role ur on u.id=ur.userId
         left join role r on r.id=ur.roleId
         left join role_permission rp on r.id=rp.roleId
