@@ -80,7 +80,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" class="form-control pull-right" name="orderTime" id="dateTimePicker" value="${orders.orderTimeStr}"/>
+                                            <input type="text" class="form-control pull-right" name="orderTime" id="dateTimePicker" value="${orders.orderTimeStr}">
                                         </div>
                                     </div>
                                     <div class="col-md-2 title">出行人数</div>
