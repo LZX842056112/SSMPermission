@@ -1,6 +1,8 @@
 package com.itheima.web;
 
 import com.github.pagehelper.PageInfo;
+import com.itheima.domain.Permission;
+import com.itheima.domain.Role;
 import com.itheima.domain.UserInfo;
 import com.itheima.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,26 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+
+    /**
+     * 用户详情
+     * @param id
+     * @return
+     */
+    @RequestMapping("/findById.do")
+    public ModelAndView findById(@RequestParam(value = "id") String id) throws Exception {
+        ModelAndView mv = new ModelAndView();
+        UserInfo userInfo = userService.findById(id);
+        for (Role role : userInfo.getRoles()) {
+            System.out.println(role+"----");
+            for (Permission permission : role.getPermissions()) {
+                System.out.println(permission);
+            }
+        }
+        mv.addObject("userInfo",userInfo);
+        mv.setViewName("user-show");
+        return mv;
+    }
 
     /**
      * 添加用户

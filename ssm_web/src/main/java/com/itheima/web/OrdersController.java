@@ -65,7 +65,7 @@ public class OrdersController {
      * @return
      */
     @RequestMapping("/updateOrders.do")
-    public String updateOrders(Orders orders,@RequestParam(name = "productId",required = true) String productId,@RequestParam(name = "memberId", required = true) String memberId) throws Exception {
+    public String updateOrders(Orders orders,@RequestParam(name = "productId") String productId,@RequestParam(name = "memberId") String memberId) throws Exception {
         Product product = productService.findById(productId);
         Member member = memberService.findById(memberId);
         orders.setProduct(product);
@@ -81,7 +81,7 @@ public class OrdersController {
      * @throws Exception
      */
     @RequestMapping("/findAllById.do")
-    public ModelAndView findAllById(@RequestParam(value = "id",required = true) String id) throws Exception {
+    public ModelAndView findAllById(@RequestParam(value = "id") String id) throws Exception {
         ModelAndView mv = new ModelAndView();
         Orders orders = ordersService.findById(id);
         List<Product> productList = productService.findAll(0, 0, "");
@@ -100,7 +100,7 @@ public class OrdersController {
      * @throws Exception
      */
     @RequestMapping("/findById.do")
-    public ModelAndView findById(@RequestParam(value = "id",required = true) String id) throws Exception {
+    public ModelAndView findById(@RequestParam(value = "id") String id) throws Exception {
         ModelAndView mv = new ModelAndView();
         Orders ordersList = ordersService.findById(id);
         mv.addObject("ordersList",ordersList);
@@ -115,7 +115,7 @@ public class OrdersController {
      * @throws Exception
      */
     @RequestMapping("/addOrders.do")
-    public String addOrders(Orders orders,@RequestParam(name = "productId",required = true) String productId,@RequestParam(name = "memberId", required = true) String memberId) throws Exception {
+    public String addOrders(Orders orders,@RequestParam(name = "productId") String productId,@RequestParam(name = "memberId") String memberId) throws Exception {
         if (orders.getOrderNum() != null && orders.getOrderNum() != "" && orders.getOrderNum().length() > 0){
             String orderNum = ordersService.findByNum(orders.getOrderNum());
             if (orderNum == null){

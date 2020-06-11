@@ -10,6 +10,13 @@ import java.util.List;
  * @create 2020/6/4 22:30
  */
 public interface IUserDao {
+    /**
+     * 用户详情
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public UserInfo findById(String id) throws Exception;
 
     /**
      * 添加用户

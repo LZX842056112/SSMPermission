@@ -33,6 +33,17 @@ public class IUserServiceImpl implements IUserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     /**
+     * 用户详情
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public UserInfo findById(String id) throws Exception {
+        return userDao.findById(id);
+    }
+
+    /**
      * 添加用户
      * @param userInfo
      * @throws Exception

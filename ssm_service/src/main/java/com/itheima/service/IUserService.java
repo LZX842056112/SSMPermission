@@ -12,6 +12,14 @@ import java.util.List;
 public interface IUserService extends UserDetailsService {
 
     /**
+     * 用户详情
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public UserInfo findById(String id) throws Exception;
+
+    /**
      * 添加用户
      * @param userInfo
      * @throws Exception

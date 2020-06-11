@@ -2,6 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itheima.dao.IUserDao">
 
+    <!--用户详情-->
+    <resultMap id="selById" type="com.itheima.domain.UserInfo">
+        <id column="id" property="id"></id>
+        <result column="email" property="email"></result>
+        <result column="username" property="username"></result>
+        <result column="PASSWORD" property="password"></result>
+        <result column="phoneNum" property="phoneNum"></result>
+        <result column="STATUS" property="status"></result>
+        <collection property="roles" ofType="com.itheima.domain.Role">
+            <id column="rid" property="id"></id>
+            <result column="roleName" property="roleName"></result>
+            <result column="roleDesc" property="roleDesc"></result>
+            <collection property="permissions" ofType="com.itheima.domain.Permission">
+                <id column="pid" property="id"></id>
+                <result column="permissionName" property="permissionName"></result>
+                <result column="url" property="url"></result>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="findById" parameterType="java.lang.String" resultType="com.itheima.domain.UserInfo" resultMap="selById">
+        select u.*,r.*,p.* from users u
+        left join users_role ur on u.id=ur.userId
+        left join role r on r.rid=ur.roleId
+        left join role_permission rp on r.rid=rp.roleId
+        left join permission p on p.pid=rp.permissionId
+        where u.id=#{id}
+    </select>
+
     <!--添加用户-->
     <insert id="addUser" parameterType="com.itheima.domain.UserInfo">
         insert into users(id,email,username,password,phoneNum,status) values(#{id},#{email},#{username},#{password},#{phoneNum},#{status})
@@ -27,22 +55,15 @@
         <result column="phoneNum" property="phoneNum"></result>
         <result column="STATUS" property="status"></result>
         <collection property="roles" ofType="com.itheima.domain.Role">
-            <id column="id" property="id"></id>
+            <id column="rid" property="id"></id>
             <result column="roleName" property="roleName"></result>
             <result column="roleDesc" property="roleDesc"></result>
-            <collection property="permissions" ofType="com.itheima.domain.Permission">
-                <id column="id" property="id"></id>
-                <result column="permissionName" property="permissionName"></result>
-                <result column="url" property="url"></result>
-            </collection>
         </collection>
     </resultMap>
     <select id="findByUserName" parameterType="java.lang.String" resultType="com.itheima.domain.UserInfo" resultMap="selByName">
-        select u.*,r.*,p.* from users u
+        select u.*,r.*from users u
         left join users_role ur on u.id=ur.userId
-        left join role r on r.id=ur.roleId
-        left join role_permission rp on r.id=rp.roleId
-        left join permission p on p.id=rp.permissionId
+        left join role r on r.rid=ur.roleId
         where u.username=#{username}
     </select>
 </mapper>
