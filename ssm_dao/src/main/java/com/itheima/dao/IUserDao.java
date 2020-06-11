@@ -12,6 +12,13 @@ import java.util.List;
 public interface IUserDao {
 
     /**
+     * 添加用户
+     * @param userInfo
+     * @throws Exception
+     */
+    public void addUser(UserInfo userInfo) throws Exception;
+
+    /**
      * 查询全部用户信息，模糊查询
      * @param fuzzyName
      * @return

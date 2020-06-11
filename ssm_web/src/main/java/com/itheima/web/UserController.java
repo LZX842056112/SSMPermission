@@ -20,7 +20,18 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    IUserService userService;
+    private IUserService userService;
+
+    /**
+     * 添加用户
+     * @param userInfo
+     * @return
+     */
+    @RequestMapping("/addUser.do")
+    public String addUser(UserInfo userInfo) throws Exception {
+        userService.addUser(userInfo);
+        return "redirect:findAll.do";
+    }
 
     /**
      * 查询全部用户信息，模糊查询
@@ -41,9 +52,4 @@ public class UserController {
         mv.setViewName("user-list");
         return mv;
     }
-
-    public String findUserByIdAndAllRole(){
-
-    }
-
 }

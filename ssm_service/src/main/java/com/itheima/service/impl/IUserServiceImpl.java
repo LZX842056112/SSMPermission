@@ -10,11 +10,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author LiZongXiao
@@ -26,6 +28,24 @@ public class IUserServiceImpl implements IUserService {
 
     @Autowired
     private IUserDao userDao;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    /**
+     * 添加用户
+     * @param userInfo
+     * @throws Exception
+     */
+    @Override
+    public void addUser(UserInfo userInfo) throws Exception {
+        //获取32位UUID大写字符串
+        String replace = UUID.randomUUID().toString().replace("-", "").toUpperCase();
+        userInfo.setId(replace);
+        //对密码进行加密处理
+        userInfo.setPassword(bCryptPasswordEncoder.encode(userInfo.getPassword()));
+        userDao.addUser(userInfo);
+    }
 
     /**
      * 查询全部用户信息，模糊查询
@@ -51,7 +71,7 @@ public class IUserServiceImpl implements IUserService {
             e.printStackTrace();
         }
         //处理自己的用户对象，封装成UserDetails
-        User user = new User(userInfo.getUsername(),"{noop}"+userInfo.getPassword(), userInfo.getStatus() == 0 ? false : true, true, true, true, getAuthority(userInfo.getRoles()));
+        User user = new User(userInfo.getUsername(), userInfo.getPassword(), userInfo.getStatus() == 0 ? false : true, true, true, true, getAuthority(userInfo.getRoles()));
         return user;
     }
 

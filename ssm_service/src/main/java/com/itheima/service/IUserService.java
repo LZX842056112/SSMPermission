@@ -10,6 +10,14 @@ import java.util.List;
  * @create 2020/6/4 22:27
  */
 public interface IUserService extends UserDetailsService {
+
+    /**
+     * 添加用户
+     * @param userInfo
+     * @throws Exception
+     */
+    public void addUser(UserInfo userInfo) throws Exception;
+
     /**
      * 查询全部用户信息，模糊查询
      * @param page
