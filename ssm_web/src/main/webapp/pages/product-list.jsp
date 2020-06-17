@@ -224,8 +224,8 @@
         if(confirm("确定要删除该条数据吗？")){
             $("input:checkbox[name=ids]:checked").each(function () {
                 str += $(this).val()+",";
-                location.href="${pageContext.request.contextPath}/product/deleteByIdStr.do?idStr="+str;
             });
+            location.href="${pageContext.request.contextPath}/product/deleteByIdStr.do?idStr="+str;
         }
     }
 
