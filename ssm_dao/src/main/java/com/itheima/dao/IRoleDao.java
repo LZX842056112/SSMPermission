@@ -11,6 +11,13 @@ import java.util.List;
 public interface IRoleDao {
 
     /**
+     * 新建角色
+     * @param role
+     * @throws Exception
+     */
+    public void addUser(Role role) throws Exception;
+
+    /**
      * 查询全部角色信息
      * @return
      * @throws Exception

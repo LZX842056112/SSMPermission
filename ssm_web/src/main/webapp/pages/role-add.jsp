@@ -6,7 +6,7 @@
     <!-- 页面meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>角色列表</title>
+    <title>角色添加</title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
     <!-- Tell the browser to be responsive to screen width -->
@@ -49,99 +49,46 @@
         <section class="content-header">
             <h1>
                 角色管理
-                <small>角色列表</small>
+                <small>角色添加</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="${pageContext.request.contextPath}/pages/main.jsp"><i class="fa fa-dashboard"></i> 首页</a></li>
                 <li><a href="${pageContext.request.contextPath}/role/findAll.do">角色管理</a></li>
-                <li class="active">角色列表</li>
+                <li class="active">角色添加</li>
             </ol>
         </section>
         <!-- 内容头部 /-->
         <!-- 正文区域 -->
         <section class="content">
-            <!-- .box-body -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">角色列表</h3>
-                </div>
-                <div class="box-body">
-                    <!-- 数据表格 -->
-                    <div class="table-box">
-                        <!--工具栏-->
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                <div class="btn-group">
-                                    <a href="${pageContext.request.contextPath}/pages/role-add.jsp" type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</a>
-                                    <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+            <div class="box-body">
+                <!--tab页-->
+                <div class="nav-tabs-custom">
+                    <!--tab内容-->
+                    <div class="tab-content">
+                        <!--label显示的内容-->
+                        <div class="tab-pane active" id="tab-label">
+                            <form action="${pageContext.request.contextPath}/role/addUser.do" method="post">
+                                <div class="row data-type">
+                                    <div class="col-md-2 title">角色名</div>
+                                    <div class="col-md-4 data">
+                                        <input type="text" class="form-control" name="roleName"/>
+                                    </div>
+                                    <div class="col-md-2 title">角色描述</div>
+                                    <div class="col-md-4 data">
+                                        <input type="text" class="form-control" name="roleDesc"/>
+                                    </div>
+                                    <div class="col-md-12 data text-center">
+                                        <button type="submit" class="btn bg-maroon">添加</button>
+                                        <button type="button" class="btn bg-default" onclick="history.back(-1);">返回</button>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                        <!--工具栏/-->
-                        <!--数据列表-->
-                        <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
-                            <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="selall" type="checkbox" class="icheckbox_square-blue">
-                                    </th>
-                                    <th>ID</th>
-                                    <th>角色名</th>
-                                    <th>角色描述</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${roleList}" var="role">
-                                    <tr>
-                                        <td><input value="${role.id}" name="ids" type="checkbox"></td>
-                                        <td>${role.id }</td>
-                                        <td>${role.roleName}</td>
-                                        <td>${role.roleDesc}</td>
-                                        <td class="text-left">
-                                            <a href="${pageContext.request.contextPath}/role/findById.do?id=${role.id}" class="btn bg-olive btn-xs">详情</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                        <!--数据列表/-->
+                        <!--label显示的内容/-->
                     </div>
-                    <!-- 数据表格 /-->
+                    <!--tab内容/-->
                 </div>
-                <!-- /.box-body -->
-
-                <!-- .box-footer-->
-                <div class="box-footer">
-                    <div class="pull-left">
-                        <div class="form-group form-inline">
-                            总共${pageInfo.pages}页，共${pageInfo.total}条数据。 每页
-                            <select id="selectbypage" class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select> 条
-                        </div>
-                    </div>
-                    <div class="box-tools pull-right">
-                        <ul class="pagination">
-                            <li>
-                                <a href="${pageContext.request.contextPath}/role/findAll.do?page=1&size=${pageInfo.pageSize}" aria-label="Previous">首页</a>
-                            </li>
-                            <li><a href="${pageContext.request.contextPath}/role/findAll.do?page=${pageInfo.prePage}&size=${pageInfo.pageSize}">上一页</a></li>
-                            <c:forEach begin="1" end="${pageInfo.pages}" var="item">
-                                <li><a href="${pageContext.request.contextPath}/role/findAll.do?page=${item}&size=${pageInfo.pageSize}">${item}</a></li>
-                            </c:forEach>
-                            <li><a href="${pageContext.request.contextPath}/role/findAll.do?page=${pageInfo.nextPage}&size=${pageInfo.pageSize}">下一页</a></li>
-                            <li>
-                                <a href="${pageContext.request.contextPath}/role/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}" aria-label="Next">尾页</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /.box-footer-->
+                <!--tab页/-->
             </div>
         </section>
         <!-- 正文区域 /-->
@@ -205,18 +152,6 @@
         $(".textarea").wysihtml5({
             locale: 'zh-CN'
         });
-
-        //设置每页显示条数
-        var opts = $('#selectbypage').find('option');
-        opts.each(function () {
-            if($(this).val() == ${pageInfo.pageSize}) {
-                $(this).attr('selected', true);
-            }
-        });
-        $("#selectbypage").click(function () {
-            var selectpage = $("#selectbypage").val();
-            location.href="${pageContext.request.contextPath}/role/findAll.do?page=1&size="+selectpage;
-        });
     });
     // 设置激活菜单
     function setSidebarActive(tagUri) {
@@ -227,6 +162,16 @@
         }
     }
     $(document).ready(function() {
+        // datetime picker
+        $('#dateTimePicker').datetimepicker({
+            format: "yyyy-mm-dd hh:ii",
+            autoclose: true,
+            todayBtn: true,
+            language: 'zh-CN'
+        });
+    });
+
+    $(document).ready(function() {
         // 激活导航位置
         setSidebarActive("admin-datalist");
         // 列表按钮
@@ -234,7 +179,7 @@
             checkboxClass: 'icheckbox_square-blue',
             increaseArea: '20%'
         });
-        // 全选操作
+        // 全选操作 
         $("#selall").click(function() {
             var clicks = $(this).is(':checked');
             if (!clicks) {

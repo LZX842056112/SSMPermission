@@ -1,6 +1,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itheima.dao.IRoleDao">
 
+    <!--新建角色-->
+    <insert id="addUser" parameterType="com.itheima.domain.Role">
+        insert into role(rid,roleName,roleDesc) values(#{id},#{roleName},#{roleDesc})
+    </insert>
+
     <!--查询全部角色信息-->
     <resultMap id="selAll" type="com.itheima.domain.Role">
         <id column="rid" property="id"></id>

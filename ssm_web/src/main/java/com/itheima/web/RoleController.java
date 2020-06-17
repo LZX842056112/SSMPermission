@@ -23,6 +23,18 @@ public class RoleController {
     IRoleService roleService;
 
     /**
+     * 新建角色
+     * @param role
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/addUser.do")
+    public String addUser(Role role) throws Exception {
+        roleService.addUser(role);
+        return "redirect:findAll.do";
+    }
+
+    /**
      * 查询全部角色信息
      * @return
      * @throws Exception
