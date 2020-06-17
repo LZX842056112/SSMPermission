@@ -25,6 +25,37 @@ public class UserController {
     private IUserService userService;
 
     /**
+     * 用户添加角色
+     * @param userId
+     * @param roleIds
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/addRoleToUser.do")
+    public String addRoleToUser(@RequestParam(value = "userId") String userId,@RequestParam(value = "ids",defaultValue = "") String[] roleIds) throws Exception {
+        if (roleIds != null && !"".equals(roleIds)){
+            userService.addRoleToUser(userId,roleIds);
+        }
+        return "redirect:findAll.do";
+    }
+
+    /**
+     * 添加角色前，查询所有当前该用户没有关联的角色
+     * @param id
+     * @return
+     */
+    @RequestMapping("/findUserByIdAndAllRole.do")
+    public ModelAndView findUserByIdAndAllRole(@RequestParam(value = "id") String id) throws Exception {
+        ModelAndView mv = new ModelAndView();
+        List<Role> roleList = userService.findUserByIdAndAllRole(id);
+        UserInfo userInfo = userService.findById(id);
+        mv.addObject("roleList",roleList);
+        mv.addObject("userInfo",userInfo);
+        mv.setViewName("user-role-add");
+        return mv;
+    }
+
+    /**
      * 用户详情
      * @param id
      * @return
