@@ -83,20 +83,23 @@
                                         <td colspan="2">${userInfo.username}</td>
                                     </tr>
                                     <tbody>
-                                    <c:forEach items="${userInfo.roles}" var="role" varStatus="vs">
-                                        <tr data-tt-id="${vs.index+1}" data-tt-parent-id="0">
-                                            <td>${role.roleName }</td>
-                                            <td>${role.roleDesc }</td>
-                                        </tr>
-                                        <c:forEach items="${role.permissions}" var="permission">
-                                            <tr data-tt-id="1-1" data-tt-parent-id="${vs.index+1}">
-                                                <td>${permission.permissionName}</td>
-                                                <td>${permission.url}</td>
+                                        <c:forEach items="${userInfo.roles}" var="role" varStatus="vs">
+                                            <tr data-tt-id="${vs.index+1}" data-tt-parent-id="0">
+                                                <td>${role.roleName }</td>
+                                                <td>${role.roleDesc }</td>
                                             </tr>
+                                            <c:forEach items="${role.permissions}" var="permission">
+                                                <tr data-tt-id="1-1" data-tt-parent-id="${vs.index+1}">
+                                                    <td>${permission.permissionName}</td>
+                                                    <td>${permission.url}</td>
+                                                </tr>
+                                            </c:forEach>
                                         </c:forEach>
-                                    </c:forEach>
                                     </tbody>
                                 </table>
+                                <div class="col-md-12 data text-center">
+                                    <button type="button" class="btn bg-default" onclick="history.back(-1);">返回</button>
+                                </div>
                             </div>
                             <!--数据列表/-->
                         </div>
