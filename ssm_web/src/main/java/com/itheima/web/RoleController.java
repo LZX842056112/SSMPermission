@@ -58,9 +58,9 @@ public class RoleController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/addUser.do")
-    public String addUser(Role role) throws Exception {
-        roleService.addUser(role);
+    @RequestMapping("/addRole.do")
+    public String addRole(Role role) throws Exception {
+        roleService.addRole(role);
         return "redirect:findAll.do";
     }
 

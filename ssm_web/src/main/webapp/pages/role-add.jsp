@@ -67,7 +67,7 @@
                     <div class="tab-content">
                         <!--label显示的内容-->
                         <div class="tab-pane active" id="tab-label">
-                            <form action="${pageContext.request.contextPath}/role/addUser.do" method="post">
+                            <form action="${pageContext.request.contextPath}/role/addRole.do" method="post">
                                 <div class="row data-type">
                                     <div class="col-md-2 title">角色名</div>
                                     <div class="col-md-4 data">

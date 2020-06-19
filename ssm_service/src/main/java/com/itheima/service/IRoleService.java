@@ -21,7 +21,7 @@ public interface IRoleService {
      * @param role
      * @throws Exception
      */
-    public void addUser(Role role) throws Exception;
+    public void addRole(Role role) throws Exception;
 
     /**
      * 查询全部角色信息

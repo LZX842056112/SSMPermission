@@ -42,11 +42,11 @@ public class IRoleServiceImpl implements IRoleService {
      * @throws Exception
      */
     @Override
-    public void addUser(Role role) throws Exception {
+    public void addRole(Role role) throws Exception {
         //获取32位UUID大写字符串
         String replace = UUID.randomUUID().toString().replace("-", "").toUpperCase();
         role.setId(replace);
-        roleDao.addUser(role);
+        roleDao.addRole(role);
     }
 
     /**
