@@ -23,6 +23,17 @@ public class IRoleServiceImpl implements IRoleService {
     IRoleDao roleDao;
 
     /**
+     * 角色详情
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Role findById(String id) throws Exception {
+        return roleDao.findById(id);
+    }
+
+    /**
      * 角色删除
      * @param id
      * @throws Exception

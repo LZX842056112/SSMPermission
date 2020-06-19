@@ -10,6 +10,14 @@ import java.util.List;
  */
 public interface IRoleService {
     /**
+     * 角色详情
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public Role findById(String id) throws Exception;
+
+    /**
      * 角色删除
      * @param id
      * @throws Exception

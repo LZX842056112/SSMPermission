@@ -23,6 +23,20 @@ public class RoleController {
     IRoleService roleService;
 
     /**
+     * 角色详情
+     * @param id
+     * @return
+     */
+    @RequestMapping("/findById.do")
+    public ModelAndView findById(@RequestParam(value = "id",required = false)String id) throws Exception {
+        ModelAndView mv = new ModelAndView();
+        Role role = roleService.findById(id);
+        mv.addObject("role",role);
+        mv.setViewName("role-show");
+        return mv;
+    }
+
+    /**
      * 角色批量删除
      * @param idStr
      * @return
