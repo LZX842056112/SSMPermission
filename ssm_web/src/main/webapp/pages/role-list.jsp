@@ -101,7 +101,7 @@
                                         <td>${role.roleDesc}</td>
                                         <td class="text-left">
                                             <a href="${pageContext.request.contextPath}/role/findById.do?id=${role.id}" class="btn bg-olive btn-xs">详情</a>
-                                            <a onclick="delById('${role.id}')" class="btn bg-olive btn-xs">删除</a>
+                                            <a onclick="delById('${role.id}')" class="btn bg-olive btn-xs">删除角色</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
