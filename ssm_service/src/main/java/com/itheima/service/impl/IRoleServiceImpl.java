@@ -23,6 +23,20 @@ public class IRoleServiceImpl implements IRoleService {
     IRoleDao roleDao;
 
     /**
+     * 角色删除
+     * @param id
+     * @throws Exception
+     */
+    @Override
+    public void deleteById(String id) throws Exception {
+        //role_permission表的角色删除
+        roleDao.deleteRolePermissionById(id);
+        //users_role表的角色删除
+        roleDao.deleteUsersRoleById(id);
+        roleDao.deleteById(id);
+    }
+
+    /**
      * 新建角色
      * @param role
      * @throws Exception

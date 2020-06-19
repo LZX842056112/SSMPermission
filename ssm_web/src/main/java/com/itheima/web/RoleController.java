@@ -23,6 +23,36 @@ public class RoleController {
     IRoleService roleService;
 
     /**
+     * 角色批量删除
+     * @param idStr
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/deleteByIdStr.do")
+    public String deleteByIdStr(@RequestParam(value = "idStr",defaultValue = "",required = false)String idStr) throws Exception {
+        if (idStr != null && idStr != "" && idStr.length()>0){
+            String[] ids = idStr.split(",");
+            for (String id : ids) {
+                System.out.println(id);
+                roleService.deleteById(id);
+            }
+        }
+        return "redirect:findAll.do";
+    }
+
+    /**
+     * 角色删除
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/deleteById.do")
+    public String deleteById(@RequestParam(value = "id",required = false) String id) throws Exception {
+        roleService.deleteById(id);
+        return "redirect:findAll.do";
+    }
+
+    /**
      * 新建角色
      * @param role
      * @return

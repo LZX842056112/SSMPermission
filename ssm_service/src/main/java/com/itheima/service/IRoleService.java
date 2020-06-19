@@ -10,6 +10,13 @@ import java.util.List;
  */
 public interface IRoleService {
     /**
+     * 角色删除
+     * @param id
+     * @throws Exception
+     */
+    public void deleteById(String id) throws Exception;
+
+    /**
      * 新建角色
      * @param role
      * @throws Exception

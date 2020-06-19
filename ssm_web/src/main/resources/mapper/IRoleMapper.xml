@@ -1,6 +1,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itheima.dao.IRoleDao">
 
+    <!--users_role角色删除-->
+    <delete id="deleteUsersRoleById" parameterType="java.lang.String">
+        delete from users_role where roleId=#{id}
+    </delete>
+
+    <!--role_permission角色删除-->
+    <delete id="deleteRolePermissionById" parameterType="java.lang.String">
+        delete from role_permission where roleId=#{id}
+    </delete>
+
+    <!--角色删除-->
+    <delete id="deleteById" parameterType="java.lang.String">
+        delete from role where rid=#{id}
+    </delete>
+
     <!--新建角色-->
     <insert id="addUser" parameterType="com.itheima.domain.Role">
         insert into role(rid,roleName,roleDesc) values(#{id},#{roleName},#{roleDesc})

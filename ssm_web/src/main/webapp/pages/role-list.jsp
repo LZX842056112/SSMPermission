@@ -73,6 +73,7 @@
                             <div class="form-group form-inline">
                                 <div class="btn-group">
                                     <a href="${pageContext.request.contextPath}/pages/role-add.jsp" type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</a>
+                                    <a onclick="delByCheck()" type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</a>
                                     <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
                                 </div>
                             </div>
@@ -100,6 +101,7 @@
                                         <td>${role.roleDesc}</td>
                                         <td class="text-left">
                                             <a href="${pageContext.request.contextPath}/role/findById.do?id=${role.id}" class="btn bg-olive btn-xs">详情</a>
+                                            <a onclick="delById('${role.id}')" class="btn bg-olive btn-xs">删除</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -198,6 +200,24 @@
 <script src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
+    //删除多条数据
+    function delByCheck() {
+        var str="";
+        if(confirm("确定要删除该条数据吗？")){
+            $("input:checkbox[name=ids]:checked").each(function () {
+                str += $(this).val()+",";
+            });
+            location.href="${pageContext.request.contextPath}/role/deleteByIdStr.do?idStr="+str;
+        }
+    }
+
+    //删除单条数据
+    function delById(id){
+        if(confirm("确定要删除该条数据吗？")){
+            location.href="${pageContext.request.contextPath}/role/deleteById.do?id="+id;
+        }
+    }
+
     $(document).ready(function() {
         // 选择框
         $(".select2").select2();
