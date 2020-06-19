@@ -10,6 +10,13 @@ import java.util.List;
  */
 public interface IPermissionService {
     /**
+     * 权限删除
+     * @param id
+     * @throws Exception
+     */
+    public void deleteById(String id) throws Exception;
+
+    /**
      * 权限添加
      * @param permission
      * @throws Exception

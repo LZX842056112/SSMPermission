@@ -21,6 +21,18 @@ public class IPermissionServiceImpl implements IPermissionService {
     IPermissionDao permissionDao;
 
     /**
+     * 权限删除
+     * @param id
+     * @throws Exception
+     */
+    @Override
+    public void deleteById(String id) throws Exception {
+        //role_permission表的权限删除
+        permissionDao.deleteRolePermissionById(id);
+        permissionDao.deleteById(id);
+    }
+
+    /**
      * 权限添加
      * @param permission
      * @throws Exception

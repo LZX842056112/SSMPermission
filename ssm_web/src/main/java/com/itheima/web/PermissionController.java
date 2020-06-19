@@ -22,12 +22,41 @@ public class PermissionController {
     IPermissionService permissionService;
 
     /**
+     * 权限批量删除
+     * @param idStr
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/deleteByIdStr.do")
+    public String deleteByIdStr(@RequestParam(value = "idStr",defaultValue = "",required = false)String idStr) throws Exception {
+        if (idStr != null && idStr != "" && idStr.length()>0){
+            String[] ids = idStr.split(",");
+            for (String id : ids) {
+                System.out.println(id);
+                permissionService.deleteById(id);
+            }
+        }
+        return "redirect:findAll.do";
+    }
+
+    /**
+     * 权限删除
+     * @param id
+     * @return
+     */
+    @RequestMapping("/deleteById.do")
+    public String deleteById(String id) throws Exception {
+        permissionService.deleteById(id);
+        return "redirect:findAll.do";
+    }
+
+    /**
      * 权限添加
      * @param permission
      * @return
      * @throws Exception
      */
-    @RequestMapping("/addPermission")
+    @RequestMapping("/addPermission.do")
     public String addPermission(Permission permission) throws Exception {
         permissionService.addPermission(permission);
         return "redirect:findAll.do";

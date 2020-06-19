@@ -9,6 +9,19 @@ import java.util.List;
  * @create 2020/6/18 17:43
  */
 public interface IPermissionDao {
+    /**
+     * role_permission表的权限删除
+     * @param id
+     * @throws Exception
+     */
+    public void deleteRolePermissionById(String id) throws Exception;
+
+    /**
+     * 权限删除
+     * @param id
+     * @throws Exception
+     */
+    public void deleteById(String id) throws Exception;
 
     /**
      * 权限添加

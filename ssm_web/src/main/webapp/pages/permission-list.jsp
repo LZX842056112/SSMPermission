@@ -101,7 +101,7 @@
                                         <td>${permission.url}</td>
                                         <td class="text-left">
                                             <a href="${pageContext.request.contextPath}/permission/findById.do?id=${permission.id}" class="btn bg-olive btn-xs">详情</a>
-                                            <a onclick="delById('${permission.id}')" class="btn bg-olive btn-xs">删除</a>
+                                            <a onclick="delById('${permission.id}')" class="btn bg-olive btn-xs">删除权限</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -200,6 +200,24 @@
 <script src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
+    //删除多条数据
+    function delByCheck() {
+        var str="";
+        if(confirm("确定要删除该条数据吗？")){
+            $("input:checkbox[name=ids]:checked").each(function () {
+                str += $(this).val()+",";
+            });
+            location.href="${pageContext.request.contextPath}/permission/deleteByIdStr.do?idStr="+str;
+        }
+    }
+
+    //删除单条数据
+    function delById(id){
+        if(confirm("确定要删除该条数据吗？")){
+            location.href="${pageContext.request.contextPath}/permission/deleteById.do?id="+id;
+        }
+    }
+
     $(document).ready(function() {
         // 选择框
         $(".select2").select2();
