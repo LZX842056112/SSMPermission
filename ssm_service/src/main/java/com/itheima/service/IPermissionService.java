@@ -10,6 +10,13 @@ import java.util.List;
  */
 public interface IPermissionService {
     /**
+     * 权限添加
+     * @param permission
+     * @throws Exception
+     */
+    public void addPermission(Permission permission) throws Exception;
+
+    /**
      * 查询全部权限信息
      * @param page
      * @param size

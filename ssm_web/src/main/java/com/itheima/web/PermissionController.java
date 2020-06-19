@@ -22,6 +22,18 @@ public class PermissionController {
     IPermissionService permissionService;
 
     /**
+     * 权限添加
+     * @param permission
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/addPermission")
+    public String addPermission(Permission permission) throws Exception {
+        permissionService.addPermission(permission);
+        return "redirect:findAll.do";
+    }
+
+    /**
      * 查询全部权限信息
      * @param page
      * @param size
