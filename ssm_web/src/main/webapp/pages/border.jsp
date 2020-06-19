@@ -45,7 +45,7 @@
                         </li>
                         <li id="admin-permission">
                             <a href="${pageContext.request.contextPath}/permission/findAll.do">
-                                <i class="fa fa-circle-o"></i> 权限管理
+                                <i class="fa fa-circle-o"></i> 资源权限管理
                             </a>
                         </li>
                     </ul>
