@@ -22,6 +22,20 @@ public class PermissionController {
     IPermissionService permissionService;
 
     /**
+     * 资源权限详情
+     * @param id
+     * @return
+     */
+    @RequestMapping("/findById.do")
+    public ModelAndView findById(@RequestParam(value = "id",required = false)String id) throws Exception {
+        ModelAndView mv = new ModelAndView();
+        Permission permission = permissionService.findById(id);
+        mv.addObject("permission",permission);
+        mv.setViewName("permission-show");
+        return mv;
+    }
+
+    /**
      * 权限批量删除
      * @param idStr
      * @return

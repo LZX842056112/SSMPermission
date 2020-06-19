@@ -10,6 +10,14 @@ import java.util.List;
  */
 public interface IPermissionService {
     /**
+     * 资源权限详情
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public Permission findById(String id) throws Exception;
+
+    /**
      * 权限删除
      * @param id
      * @throws Exception

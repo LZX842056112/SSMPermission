@@ -10,6 +10,14 @@ import java.util.List;
  */
 public interface IPermissionDao {
     /**
+     * 资源权限详情
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public Permission findById(String id) throws Exception;
+
+    /**
      * role_permission表的权限删除
      * @param id
      * @throws Exception
@@ -36,4 +44,5 @@ public interface IPermissionDao {
      * @throws Exception
      */
     public List<Permission> findAll() throws Exception;
+
 }

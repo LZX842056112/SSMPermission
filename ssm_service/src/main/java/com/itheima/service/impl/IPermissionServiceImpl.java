@@ -2,7 +2,6 @@ package com.itheima.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.itheima.dao.IPermissionDao;
-import com.itheima.dao.IProductDao;
 import com.itheima.domain.Permission;
 import com.itheima.service.IPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,17 @@ import java.util.UUID;
 public class IPermissionServiceImpl implements IPermissionService {
     @Autowired
     IPermissionDao permissionDao;
+
+    /**
+     * 资源权限详情
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Permission findById(String id) throws Exception {
+        return permissionDao.findById(id);
+    }
 
     /**
      * 权限删除
