@@ -1,6 +1,8 @@
 package com.itheima.dao;
 
+import com.itheima.domain.Permission;
 import com.itheima.domain.Role;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -9,6 +11,22 @@ import java.util.List;
  * @create 2020/6/13 22:20
  */
 public interface IRoleDao {
+    /**
+     * 添加权限
+     * @param roleId
+     * @param permissionId
+     * @throws Exception
+     */
+    public void addPermissionToRole(@Param("roleId") String roleId,@Param("permissionId") String permissionId) throws Exception;
+
+    /**
+     * 添加权限前，查询所有当前该角色没有关联的权限
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public List<Permission> findOtherPermissions(@Param("id") String id) throws Exception;
+
     /**
      * 角色详情
      * @param id

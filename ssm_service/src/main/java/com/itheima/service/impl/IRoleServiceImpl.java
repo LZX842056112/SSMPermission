@@ -2,6 +2,7 @@ package com.itheima.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.itheima.dao.IRoleDao;
+import com.itheima.domain.Permission;
 import com.itheima.domain.Role;
 import com.itheima.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,28 @@ public class IRoleServiceImpl implements IRoleService {
 
     @Autowired
     IRoleDao roleDao;
+
+    /**
+     * 添加权限
+     * @param roleId
+     * @param permissionId
+     * @throws Exception
+     */
+    @Override
+    public void addPermissionToRole(String roleId, String permissionId) throws Exception {
+        roleDao.addPermissionToRole(roleId,permissionId);
+    }
+
+    /**
+     * 添加权限前，查询所有当前该角色没有关联的权限
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Permission> findOtherPermissions(String id) throws Exception {
+        return roleDao.findOtherPermissions(id);
+    }
 
     /**
      * 角色详情

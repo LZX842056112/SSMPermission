@@ -1,6 +1,7 @@
 package com.itheima.web;
 
 import com.github.pagehelper.PageInfo;
+import com.itheima.domain.Permission;
 import com.itheima.domain.Role;
 import com.itheima.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,37 @@ public class RoleController {
 
     @Autowired
     IRoleService roleService;
+
+    /**
+     * 添加权限
+     * @param roleId
+     * @param permissionIds
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/addPermissionToRole.do")
+    public String addPermissionToRole(@RequestParam(value = "roleId") String roleId,@RequestParam(value = "ids",defaultValue = "") String[] permissionIds) throws Exception {
+        for (String permissionId : permissionIds) {
+            roleService.addPermissionToRole(roleId,permissionId);
+        }
+        return "redirect:findAll.do";
+    }
+
+    /**
+     * 添加权限前，查询所有当前该角色没有关联的权限
+     * @param id
+     * @return
+     */
+    @RequestMapping("/findRoleByIdAndAllPer.do")
+    public ModelAndView findRoleByIdAndAllPer(@RequestParam(value = "id")String id) throws Exception {
+        ModelAndView mv = new ModelAndView();
+        Role role = roleService.findById(id);
+        List<Permission> permissionList = roleService.findOtherPermissions(id);
+        mv.addObject("role",role);
+        mv.addObject("permissionList",permissionList);
+        mv.setViewName("role-permission-add");
+        return mv;
+    }
 
     /**
      * 角色详情
