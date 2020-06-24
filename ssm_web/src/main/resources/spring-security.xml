@@ -55,6 +55,6 @@
     <bean id="jdbcTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
         <property name="dataSource" ref="dataSource"/>
         <!-- 系统启动自动创建，第一次的时候打开，后来需要关闭 -->
-        <property name="createTableOnStartup" value="true"/>
+        <!-- <property name="createTableOnStartup" value="true"/>-->
     </bean>
 </beans>
