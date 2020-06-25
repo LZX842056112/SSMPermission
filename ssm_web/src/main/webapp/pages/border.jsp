@@ -55,6 +55,11 @@
                                 </a>
                             </security:authorize>
                         </li>
+                        <li id="admin-log">
+                            <a href="${pageContext.request.contextPath}/syslog/findAll.do">
+                                <i class="fa fa-circle-o"></i> 日志管理
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
