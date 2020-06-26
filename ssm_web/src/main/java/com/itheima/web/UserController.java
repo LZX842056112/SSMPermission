@@ -99,9 +99,9 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping("/findAll.do")
-    public ModelAndView findAll(@RequestParam(value = "page",defaultValue = "1",required = false) String page,@RequestParam(value = "size",defaultValue = "4",required = false) String size,@RequestParam(value = "fuzzyName",defaultValue = "",required = false) String fuzzyName) throws Exception {
+    public ModelAndView findAll(@RequestParam(value = "page",defaultValue = "1") Integer page,@RequestParam(value = "size",defaultValue = "4") Integer size,@RequestParam(value = "fuzzyName",defaultValue = "",required = false) String fuzzyName) throws Exception {
         ModelAndView mv = new ModelAndView();
-        List<UserInfo> userInfoList = userService.findAll(Integer.parseInt(page), Integer.parseInt(size),fuzzyName);
+        List<UserInfo> userInfoList = userService.findAll(page,size,fuzzyName);
         PageInfo pageInfo = new PageInfo(userInfoList);
         mv.addObject("userInfoList",userInfoList);
         mv.addObject("fuzzyName",fuzzyName);

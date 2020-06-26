@@ -56,8 +56,8 @@
         select id,username,email,phoneNum,status from users
         <where>
             1=1
-            <if test="fuzzyName!=null and fuzzyName!=''">
-                and productName like concat('%',#{fuzzyName},'%')
+            <if test="fuzzyName!=''">
+                and username like concat('%',#{fuzzyName},'%')
             </if>
         </where>
     </select>
