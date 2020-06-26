@@ -31,12 +31,13 @@ public class SysLogController {
      * @throws Exception
      */
     @RequestMapping("/findAll.do")
-    public ModelAndView findAll(@RequestParam(value = "page",defaultValue = "1") String page, @RequestParam(value = "size",defaultValue = "10") String size, @RequestParam(value = "fuzzyName",defaultValue = "",required = false) String fuzzyName) throws Exception {
+    public ModelAndView findAll(@RequestParam(value = "page",defaultValue = "1") Integer page, @RequestParam(value = "size",defaultValue = "10") Integer size, @RequestParam(value = "fuzzyName",defaultValue = "",required = false) String fuzzyName) throws Exception {
         ModelAndView mv = new ModelAndView();
-        List<SysLog> sysLogList = sysLogService.findAll(Integer.parseInt(page), Integer.parseInt(size), fuzzyName);
+        List<SysLog> sysLogList = sysLogService.findAll(page,size,fuzzyName);
         PageInfo pageInfo = new PageInfo(sysLogList);
         mv.addObject("sysLogList",sysLogList);
         mv.addObject("pageInfo",pageInfo);
+        mv.addObject("fuzzyName",fuzzyName);
         mv.setViewName("syslog-list");
         return mv;
     }
