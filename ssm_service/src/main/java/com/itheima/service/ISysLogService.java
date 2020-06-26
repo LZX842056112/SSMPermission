@@ -11,6 +11,13 @@ import java.util.List;
  */
 public interface ISysLogService {
     /**
+     * 添加日志
+     * @param sysLog
+     * @throws Exception
+     */
+    public void addSysLog(SysLog sysLog)throws Exception;
+
+    /**
      * 查询全部日志，模糊查询
      * @param page
      * @param size

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author LiZongXiao
@@ -20,6 +21,19 @@ public class ISysLogServiceImpl implements ISysLogService {
 
     @Autowired
     ISysLogDao sysLogDao;
+
+    /**
+     * 添加日志
+     * @param sysLog
+     * @throws Exception
+     */
+    @Override
+    public void addSysLog(SysLog sysLog) throws Exception {
+        //获取32位UUID大写字符串
+        String replace = UUID.randomUUID().toString().replace("-", "").toUpperCase();
+        sysLog.setId(replace);
+        sysLogDao.addSysLog(sysLog);
+    }
 
     /**
      * 查询全部日志，模糊查询
