@@ -90,9 +90,9 @@ public class PermissionController {
      */
     @RequestMapping("/findAll.do")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView findAll(@RequestParam(value = "page",defaultValue = "1",required = false)String page, @RequestParam(value = "size",defaultValue = "4",required = false) String size) throws Exception {
+    public ModelAndView findAll(@RequestParam(value = "page",defaultValue = "1")Integer page, @RequestParam(value = "size",defaultValue = "4") Integer size) throws Exception {
         ModelAndView mv =  new ModelAndView();
-        List<Permission> permissionList = permissionService.findAll(Integer.parseInt(page), Integer.parseInt(size));
+        List<Permission> permissionList = permissionService.findAll(page,size);
         PageInfo pageInfo = new PageInfo(permissionList);
         mv.addObject("permissionList",permissionList);
         mv.addObject("pageInfo",pageInfo);
