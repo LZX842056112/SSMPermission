@@ -122,9 +122,9 @@ public class RoleController {
      * @throws Exception
      */
     @RequestMapping("findAll.do")
-    public ModelAndView findAll(@RequestParam(value = "page",defaultValue = "1",required = false) String page, @RequestParam(value = "size",defaultValue = "4",required = false) String size) throws Exception {
+    public ModelAndView findAll(@RequestParam(value = "page",defaultValue = "1") Integer page, @RequestParam(value = "size",defaultValue = "4") Integer size) throws Exception {
         ModelAndView mv = new ModelAndView();
-        List<Role> roleList = roleService.findAll(Integer.parseInt(page),Integer.parseInt(size));
+        List<Role> roleList = roleService.findAll(page,size);
         PageInfo pageInfo = new PageInfo(roleList);
         mv.addObject("pageInfo",pageInfo);
         mv.addObject("roleList",roleList);
