@@ -61,40 +61,6 @@ public class OrdersController {
     }
 
     /**
-     * 订单修改
-     * @param orders
-     * @return
-     */
-    @RequestMapping("/updateOrders.do")
-    public String updateOrders(Orders orders,@RequestParam(name = "productId") String productId,@RequestParam(name = "memberId") String memberId) throws Exception {
-        Product product = productService.findById(productId);
-        Member member = memberService.findById(memberId);
-        orders.setProduct(product);
-        orders.setMember(member);
-        ordersService.updateOrders(orders);
-        return "redirect:findAll.do";
-    }
-
-    /**
-     * 订单修改前回显信息
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping("/findAllById.do")
-    public ModelAndView findAllById(@RequestParam(value = "id") String id) throws Exception {
-        ModelAndView mv = new ModelAndView();
-        Orders orders = ordersService.findById(id);
-        List<Product> productList = productService.findAll(0, 0, "");
-        List<Member> memberList = memberService.findAll();
-        mv.addObject("orders",orders);
-        mv.addObject("productList",productList);
-        mv.addObject("memberList",memberList);
-        mv.setViewName("orders-update");
-        return mv;
-    }
-
-    /**
      * 订单详情
      * @param id
      * @return

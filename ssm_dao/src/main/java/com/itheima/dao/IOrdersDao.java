@@ -18,13 +18,6 @@ public interface IOrdersDao {
     public void deleteById(String id) throws Exception;
 
     /**
-     * 订单修改
-     * @param orders
-     * @throws Exception
-     */
-    public void updateOrders(Orders orders) throws Exception;
-
-    /**
      * 订单详情
      * @param id
      * @return

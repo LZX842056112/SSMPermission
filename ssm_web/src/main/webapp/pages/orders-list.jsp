@@ -119,7 +119,6 @@
                                         <td>${order.orderStatusStr}</td>
                                         <td class="text-center">
                                             <a href="${pageContext.request.contextPath}/orders/findById.do?id=${order.id}" class="btn bg-olive btn-xs">详情</a>
-                                            <a href="${pageContext.request.contextPath}/orders/findAllById.do?id=${order.id}" class="btn bg-olive btn-xs">编辑</a>
                                             <a onclick="delById('${order.id}')" class="btn bg-olive btn-xs">删除</a>
                                         </td>
                                     </tr>
