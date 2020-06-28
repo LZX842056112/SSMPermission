@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -101,6 +102,11 @@ public class UserController {
     @RequestMapping("/findAll.do")
     public ModelAndView findAll(@RequestParam(value = "page",defaultValue = "1") Integer page,@RequestParam(value = "size",defaultValue = "4") Integer size,@RequestParam(value = "fuzzyName",defaultValue = "",required = false) String fuzzyName) throws Exception {
         ModelAndView mv = new ModelAndView();
+        //判断是乱码 (GBK包含全部中文字符；UTF-8则包含全世界所有国家需要用到的字符。)
+        if (!(Charset.forName("GBK").newEncoder().canEncode(fuzzyName))) {
+            //转码UTF8
+            fuzzyName = new String(fuzzyName.getBytes("ISO-8859-1"), "utf-8");
+        }
         List<UserInfo> userInfoList = userService.findAll(page,size,fuzzyName);
         PageInfo pageInfo = new PageInfo(userInfoList);
         mv.addObject("userInfoList",userInfoList);
