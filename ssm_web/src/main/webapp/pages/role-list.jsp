@@ -234,7 +234,7 @@
                 $(this).attr('selected', true);
             }
         });
-        $("#selectbypage").click(function () {
+        $("#selectbypage").change(function () {
             var selectpage = $("#selectbypage").val();
             location.href="${pageContext.request.contextPath}/role/findAll.do?page=1&size="+selectpage;
         });
