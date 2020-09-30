@@ -131,15 +131,40 @@
                     <div class="box-tools pull-right">
                         <ul class="pagination">
                             <li>
-                                <a href="${pageContext.request.contextPath}/role/findAll.do?page=1&size=${pageInfo.pageSize}" aria-label="Previous">首页</a>
+                                <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=1&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}" aria-label="Previous">首页</a>
                             </li>
-                            <li><a href="${pageContext.request.contextPath}/role/findAll.do?page=${pageInfo.prePage}&size=${pageInfo.pageSize}">上一页</a></li>
-                            <c:forEach begin="1" end="${pageInfo.pages}" var="item">
-                                <li><a href="${pageContext.request.contextPath}/role/findAll.do?page=${item}&size=${pageInfo.pageSize}">${item}</a></li>
-                            </c:forEach>
-                            <li><a href="${pageContext.request.contextPath}/role/findAll.do?page=${pageInfo.nextPage}&size=${pageInfo.pageSize}">下一页</a></li>
                             <li>
-                                <a href="${pageContext.request.contextPath}/role/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}" aria-label="Next">尾页</a>
+                                <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.prePage}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">上一页</a>
+                            </li>
+                            <c:if test="${pageInfo.pageNum > pageInfo.pages - 4 && pageInfo.pages >= 10}">
+                                <c:forEach begin="${pageInfo.pages-9}" end="${pageInfo.pageNum-6}" var="item">
+                                    <li <c:if test="${pageInfo.pageNum == item}">class="active" </c:if>><%--显示选中的页数--%>
+                                        <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${item}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">${item}</a>
+                                    </li>
+                                </c:forEach>
+                            </c:if>
+                            <c:forEach begin="${pageInfo.pageNum <= 6 ? 1 : pageInfo.pageNum - 5}" end="${pageInfo.pageNum >= pageInfo.pages-4 ? pageInfo.pages : pageInfo.pageNum + 4}" var="item">
+                                <li <c:if test="${pageInfo.pageNum == item}">class="active" </c:if>><%--显示选中的页数--%>
+                                    <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${item}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">${item}</a>
+                                </li>
+                            </c:forEach>
+                            <c:if test="${pageInfo.pageNum < 6 && pageInfo.pages >= 10}">
+                                <c:forEach begin="${pageInfo.pageNum+5}" end="10" var="item">
+                                    <li <c:if test="${pageInfo.pageNum == item}">class="active" </c:if>><%--显示选中的页数--%>
+                                        <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${item}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">${item}</a>
+                                    </li>
+                                </c:forEach>
+                            </c:if>
+                            <li>
+                                <c:if test="${pageInfo.pageNum==pageInfo.pages}">
+                                    <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">下一页</a>
+                                </c:if>
+                                <c:if test="${pageInfo.pageNum<pageInfo.pages}">
+                                    <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.nextPage}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">下一页</a>
+                                </c:if>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}" aria-label="Next">尾页</a>
                             </li>
                         </ul>
                     </div>
