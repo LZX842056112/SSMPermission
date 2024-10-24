@@ -6,7 +6,7 @@
     <!-- 页面meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>用户详情</title>
+    <title>角色详情</title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
     <!-- Tell the browser to be responsive to screen width -->
@@ -46,16 +46,16 @@
             <!-- 内容头部 -->
             <section class="content-header">
                 <h1>
-                    用户管理 <small>用户列表</small>
+                    角色管理 <small>角色列表</small>
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="${pageContext.request.contextPath}/pages/main.jsp">
                         <i class="fa fa-dashboard"></i> 首页</a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/user/findAll.do">用户管理</a>
+                        <a href="${pageContext.request.contextPath}/role/findAll.do">角色管理</a>
                     </li>
-                    <li class="active">用户列表</li>
+                    <li class="active">角色列表</li>
                 </ol>
             </section>
             <!-- 内容头部 /-->
@@ -64,7 +64,7 @@
                 <!-- .box-body -->
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">用户列表</h3>
+                        <h3 class="box-title">角色列表</h3>
                     </div>
                     <div class="box-body">
                         <!-- 数据表格 -->
@@ -75,25 +75,19 @@
                                        class="table table-bordered table-hover dataTable">
                                     <thead>
                                     <tr>
-                                        <th>名称</th>
-                                        <th>描述</th>
+                                        <th>角色名称</th>
+                                        <th>角色描述</th>
                                     </tr>
                                     </thead>
                                     <tr data-tt-id="0">
-                                        <td colspan="2">${userInfo.username}</td>
+                                        <td colspan="2">${role.roleName}</td>
                                     </tr>
                                     <tbody>
-                                        <c:forEach items="${userInfo.roles}" var="role" varStatus="vs">
+                                        <c:forEach items="${role.permissions}" var="permission" varStatus="vs">
                                             <tr data-tt-id="${vs.index+1}" data-tt-parent-id="0">
-                                                <td>${role.roleName }</td>
-                                                <td>${role.roleDesc }</td>
+                                                <td>${permission.permissionName}</td>
+                                                <td>${permission.url}</td>
                                             </tr>
-                                            <c:forEach items="${role.permissions}" var="permission">
-                                                <tr data-tt-id="1-1" data-tt-parent-id="${vs.index+1}">
-                                                    <td>${permission.permissionName}</td>
-                                                    <td>${permission.url}</td>
-                                                </tr>
-                                            </c:forEach>
                                         </c:forEach>
                                     </tbody>
                                 </table>

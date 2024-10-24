@@ -6,7 +6,7 @@
     <!-- 页面meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>用户列表</title>
+    <title>权限添加</title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
     <!-- Tell the browser to be responsive to screen width -->
@@ -48,138 +48,47 @@
         <!-- 内容头部 -->
         <section class="content-header">
             <h1>
-                用户管理
-                <small>用户列表</small>
+                权限管理
+                <small>权限添加</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="${pageContext.request.contextPath}/pages/main.jsp"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li><a href="${pageContext.request.contextPath}/user/findAll.do">用户管理</a></li>
-                <li class="active">用户列表</li>
+                <li><a href="${pageContext.request.contextPath}/permission/findAll.do">权限管理</a></li>
+                <li class="active">权限添加</li>
             </ol>
         </section>
         <!-- 内容头部 /-->
         <!-- 正文区域 -->
         <section class="content">
-            <!-- .box-body -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">用户列表</h3>
-                </div>
-                <div class="box-body">
-                    <!-- 数据表格 -->
-                    <div class="table-box">
-                        <!--工具栏-->
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                <div class="btn-group">
-                                    <a href="${pageContext.request.contextPath}/pages/user-add.jsp" type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</a>
-                                    <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+            <div class="box-body">
+                <!--tab页-->
+                <div class="nav-tabs-custom">
+                    <!--tab内容-->
+                    <div class="tab-content">
+                        <!--label显示的内容-->
+                        <div class="tab-pane active" id="tab-label">
+                            <form action="${pageContext.request.contextPath}/permission/addPermission.do" method="post">
+                                <div class="row data-type">
+                                    <div class="col-md-2 title">权限名</div>
+                                    <div class="col-md-4 data">
+                                        <input type="text" class="form-control" name="permissionName"/>
+                                    </div>
+                                    <div class="col-md-2 title">资源路径</div>
+                                    <div class="col-md-4 data">
+                                        <input type="text" class="form-control" name="url"/>
+                                    </div>
+                                    <div class="col-md-12 data text-center">
+                                        <button type="submit" class="btn bg-maroon">添加</button>
+                                        <button type="button" class="btn bg-default" onclick="history.back(-1);">返回</button>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                        <div class="box-tools pull-right">
-                            <div class="has-feedback">
-                                <form action="${pageContext.request.contextPath}/user/findAll.do" method="post">
-                                    <input type="text" name="fuzzyName" class="form-control input-sm" value="${fuzzyName}" placeholder="用户名称搜索"/>
-                                    <span type="submit" class="bg-maroon glyphicon glyphicon-search form-control-feedback"></span>
-                                </form>
-                            </div>
-                        </div>
-                        <!--工具栏/-->
-                        <!--数据列表-->
-                        <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
-                            <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="selall" type="checkbox" class="icheckbox_square-blue">
-                                    </th>
-                                    <th>ID</th>
-                                    <th>用户名</th>
-                                    <th>邮箱</th>
-                                    <th>联系电话</th>
-                                    <th>状态</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${userInfoList}" var="user">
-                                    <tr>
-                                        <td><input value="${user.id}" name="ids" type="checkbox"></td>
-                                        <td>${user.id }</td>
-                                        <td>${user.username }</td>
-                                        <td>${user.email }</td>
-                                        <td>${user.phoneNum }</td>
-                                        <td>${user.statusStr }</td>
-                                        <td class="text-center">
-                                            <a href="${pageContext.request.contextPath}/user/findById.do?id=${user.id}" class="btn bg-olive btn-xs">详情</a>
-                                            <a href="${pageContext.request.contextPath}/user/findUserByIdAndAllRole.do?id=${user.id}" class="btn bg-olive btn-xs">添加角色</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                        <!--数据列表/-->
+                        <!--label显示的内容/-->
                     </div>
-                    <!-- 数据表格 /-->
+                    <!--tab内容/-->
                 </div>
-                <!-- /.box-body -->
-
-                <!-- .box-footer-->
-                <div class="box-footer">
-                    <div class="pull-left">
-                        <div class="form-group form-inline">
-                            总共${pageInfo.pages}页，共${pageInfo.total}条数据。 每页
-                            <select id="selectbypage" class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select> 条
-                        </div>
-                    </div>
-                    <div class="box-tools pull-right">
-                        <ul class="pagination">
-                            <li>
-                                <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=1&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}" aria-label="Previous">首页</a>
-                            </li>
-                            <li>
-                                <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.prePage}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">上一页</a>
-                            </li>
-                            <c:if test="${pageInfo.pageNum > pageInfo.pages - 4 && pageInfo.pages >= 10}">
-                                <c:forEach begin="${pageInfo.pages-9}" end="${pageInfo.pageNum-6}" var="item">
-                                    <li <c:if test="${pageInfo.pageNum == item}">class="active" </c:if>><%--显示选中的页数--%>
-                                        <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${item}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">${item}</a>
-                                    </li>
-                                </c:forEach>
-                            </c:if>
-                            <c:forEach begin="${pageInfo.pageNum <= 6 ? 1 : pageInfo.pageNum - 5}" end="${pageInfo.pageNum >= pageInfo.pages-4 ? pageInfo.pages : pageInfo.pageNum + 4}" var="item">
-                                <li <c:if test="${pageInfo.pageNum == item}">class="active" </c:if>><%--显示选中的页数--%>
-                                    <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${item}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">${item}</a>
-                                </li>
-                            </c:forEach>
-                            <c:if test="${pageInfo.pageNum < 6 && pageInfo.pages >= 10}">
-                                <c:forEach begin="${pageInfo.pageNum+5}" end="10" var="item">
-                                    <li <c:if test="${pageInfo.pageNum == item}">class="active" </c:if>><%--显示选中的页数--%>
-                                        <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${item}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">${item}</a>
-                                    </li>
-                                </c:forEach>
-                            </c:if>
-                            <li>
-                                <c:if test="${pageInfo.pageNum==pageInfo.pages}">
-                                    <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">下一页</a>
-                                </c:if>
-                                <c:if test="${pageInfo.pageNum<pageInfo.pages}">
-                                    <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.nextPage}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">下一页</a>
-                                </c:if>
-                            </li>
-                            <li>
-                                <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}" aria-label="Next">尾页</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /.box-footer-->
+                <!--tab页/-->
             </div>
         </section>
         <!-- 正文区域 /-->
@@ -243,18 +152,6 @@
         $(".textarea").wysihtml5({
             locale: 'zh-CN'
         });
-
-        //设置每页显示条数
-        var opts = $('#selectbypage').find('option');
-        opts.each(function () {
-            if($(this).val() == ${pageInfo.pageSize}) {
-                $(this).attr('selected', true);
-            }
-        });
-        $("#selectbypage").change(function () {
-            var selectpage = $("#selectbypage").val();
-            location.href="${pageContext.request.contextPath}/user/findAll.do?page=1&size="+selectpage+"&fuzzyName=${fuzzyName}";
-        });
     });
     // 设置激活菜单
     function setSidebarActive(tagUri) {
@@ -265,6 +162,16 @@
         }
     }
     $(document).ready(function() {
+        // datetime picker
+        $('#dateTimePicker').datetimepicker({
+            format: "yyyy-mm-dd hh:ii",
+            autoclose: true,
+            todayBtn: true,
+            language: 'zh-CN'
+        });
+    });
+
+    $(document).ready(function() {
         // 激活导航位置
         setSidebarActive("admin-datalist");
         // 列表按钮
@@ -272,7 +179,7 @@
             checkboxClass: 'icheckbox_square-blue',
             increaseArea: '20%'
         });
-        // 全选操作
+        // 全选操作 
         $("#selall").click(function() {
             var clicks = $(this).is(':checked');
             if (!clicks) {

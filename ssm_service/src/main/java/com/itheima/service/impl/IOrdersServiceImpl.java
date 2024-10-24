@@ -32,16 +32,6 @@ public class IOrdersServiceImpl implements IOrdersService {
     }
 
     /**
-     * 订单修改
-     * @param orders
-     * @throws Exception
-     */
-    @Override
-    public void updateOrders(Orders orders) throws Exception {
-        ordersDao.updateOrders(orders);
-    }
-
-    /**
      * 订单详情
      * @param id
      * @return

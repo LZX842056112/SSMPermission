@@ -6,7 +6,7 @@
     <!-- 页面meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>订单修改</title>
+    <title>日志列表</title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
     <!-- Tell the browser to be responsive to screen width -->
@@ -48,97 +48,136 @@
         <!-- 内容头部 -->
         <section class="content-header">
             <h1>
-                订单管理
-                <small>订单修改</small>
+                日志管理
+                <small>日志列表</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="${pageContext.request.contextPath}/pages/main.jsp"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li><a href="${pageContext.request.contextPath}/orders/findAll.do">订单管理</a></li>
-                <li class="active">订单修改</li>
+                <li><a href="${pageContext.request.contextPath}/syslog/findAll.do">日志管理</a></li>
+                <li class="active">日志列表</li>
             </ol>
         </section>
         <!-- 内容头部 /-->
         <!-- 正文区域 -->
         <section class="content">
-            <div class="box-body">
-                <!--tab页-->
-                <div class="nav-tabs-custom">
-                    <!--tab内容-->
-                    <div class="tab-content">
-                        <!--label显示的内容-->
-                        <div class="tab-pane active" id="tab-label">
-                            <form action="${pageContext.request.contextPath}/orders/updateOrders.do" method="post">
-                                <input type="hidden" class="form-control" name="id" value="${orders.id}"/>
-                                <div class="row data-type">
-                                    <div class="col-md-2 title">订单编号</div>
-                                    <div class="col-md-4 data">
-                                        <input type="text" class="form-control" name="orderNum" value="${orders.orderNum}"/>
-                                    </div>
-                                    <div class="col-md-2 title">下单时间</div>
-                                    <div class="col-md-4 data">
-                                        <div class="input-group date">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input type="text" class="form-control pull-right" name="orderTime" id="dateTimePicker" value="${orders.orderTimeStr}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 title">出行人数</div>
-                                    <div class="col-md-4 data">
-                                        <input type="text" class="form-control" name="peopleCount" value="${orders.peopleCount}"/>
-                                    </div>
-                                    <div class="col-md-2 title">产品名称</div>
-                                    <div class="col-md-4 data">
-                                        <select id="productIdList" name="productId" class="form-control select2" style="width: 100%">
-                                            <c:forEach items="${productList}" var="product">
-                                                <option value="${product.id}">${product.productName}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2 title">会员信息</div>
-                                    <div class="col-md-4 data">
-                                        <select id="memberIdList" name="memberId" class="form-control select2" style="width: 100%">
-                                            <c:forEach items="${memberList}" var="member">
-                                                <option value="${member.id}">${member.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2 title">订单状态</div>
-                                    <div class="col-md-4 data">
-                                        <div class="form-group form-inline">
-                                            <div class="radio"><label><input <c:if test="${orders.orderStatus == 0}">checked</c:if>
-                                                                             type="radio" name="orderStatus" value="0"> 未支付</label></div>
-                                            <div class="radio"><label><input <c:if test="${orders.orderStatus == 1}">checked</c:if>
-                                                                             type="radio" name="orderStatus" value="1"> 已支付</label></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 title">支付方式</div>
-                                    <div class="col-md-4 data">
-                                        <div class="form-group form-inline">
-                                            <div class="radio"><label><input <c:if test="${orders.payType == 0}">checked</c:if>
-                                                                             type="radio" name="payType" value="0"> 支付宝</label></div>
-                                            <div class="radio"><label><input <c:if test="${orders.payType == 1}">checked</c:if>
-                                                                             type="radio" name="payType" value="1"> 微信</label></div>
-                                            <div class="radio"><label><input <c:if test="${orders.payType == 2}">checked</c:if>
-                                                                             type="radio" name="payType" value="2"> 其他</label></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 title rowHeight2x">订单描述</div>
-                                    <div class="col-md-4 data rowHeight2x">
-                                        <textarea class="form-control" rows="3" name="orderDesc">${orders.orderDesc}</textarea>
-                                    </div>
-                                    <div class="col-md-12 data text-center">
-                                        <button type="submit" class="btn bg-maroon">修改</button>
-                                        <button type="button" class="btn bg-default" onclick="history.back(-1);">返回</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <!--label显示的内容/-->
-                    </div>
-                    <!--tab内容/-->
+            <!-- .box-body -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">日志列表</h3>
                 </div>
-                <!--tab页/-->
+                <div class="box-body">
+                    <!-- 数据表格 -->
+                    <div class="table-box">
+                        <!--工具栏-->
+                        <div class="pull-left">
+                            <div class="form-group form-inline">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-tools pull-right">
+                            <div class="has-feedback">
+                                <form action="${pageContext.request.contextPath}/syslog/findAll.do" method="post">
+                                    <input type="text" name="fuzzyName" class="form-control input-sm" value="${fuzzyName}" placeholder="用户名称搜索"/>
+                                    <span type="submit" class="bg-maroon glyphicon glyphicon-search form-control-feedback"></span>
+                                </form>
+                            </div>
+                        </div>
+                        <!--工具栏/-->
+                        <!--数据列表-->
+                        <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+                            <thead>
+                                <tr>
+                                    <th class="" style="padding-right:0px;">
+                                        <input id="selall" type="checkbox" class="icheckbox_square-blue">
+                                    </th>
+                                    <th>ID</th>
+                                    <th>访问时间</th>
+                                    <th>用户名</th>
+                                    <th>IP</th>
+                                    <th>URL</th>
+                                    <th>执行时长</th>
+                                    <th>访问方法</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${sysLogList}" var="sysLog">
+                                    <tr>
+                                        <td><input value="${sysLog.id}" name="ids" type="checkbox"></td>
+                                        <td>${sysLog.id }</td>
+                                        <td>${sysLog.visitTimeStr }</td>
+                                        <td>${sysLog.username }</td>
+                                        <td>${sysLog.ip}</td>
+                                        <td>${sysLog.url }</td>
+                                        <td>${sysLog.executionTime }</td>
+                                        <td>${sysLog.method }</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                        <!--数据列表/-->
+                    </div>
+                    <!-- 数据表格 /-->
+                </div>
+                <!-- /.box-body -->
+
+                <!-- .box-footer-->
+                <div class="box-footer">
+                    <div class="pull-left">
+                        <div class="form-group form-inline">
+                            总共${pageInfo.pages}页，共${pageInfo.total}条数据。 每页
+                            <select id="selectbypage" class="form-control">
+                                <option>10</option>
+                                <option>20</option>
+                                <option>40</option>
+                                <option>60</option>
+                                <option>80</option>
+                            </select> 条
+                        </div>
+                    </div>
+                    <div class="box-tools pull-right">
+                        <ul class="pagination">
+                            <li>
+                                <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=1&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}" aria-label="Previous">首页</a>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.prePage}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">上一页</a>
+                            </li>
+                            <c:if test="${pageInfo.pageNum > pageInfo.pages - 4 && pageInfo.pages >= 10}">
+                                <c:forEach begin="${pageInfo.pages-9}" end="${pageInfo.pageNum-6}" var="item">
+                                    <li <c:if test="${pageInfo.pageNum == item}">class="active" </c:if>><%--显示选中的页数--%>
+                                        <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${item}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">${item}</a>
+                                    </li>
+                                </c:forEach>
+                            </c:if>
+                            <c:forEach begin="${pageInfo.pageNum <= 6 ? 1 : pageInfo.pageNum - 5}" end="${pageInfo.pageNum >= pageInfo.pages-4 ? pageInfo.pages : pageInfo.pageNum + 4}" var="item">
+                                <li <c:if test="${pageInfo.pageNum == item}">class="active" </c:if>><%--显示选中的页数--%>
+                                    <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${item}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">${item}</a>
+                                </li>
+                            </c:forEach>
+                            <c:if test="${pageInfo.pageNum < 6 && pageInfo.pages >= 10}">
+                                <c:forEach begin="${pageInfo.pageNum+5}" end="10" var="item">
+                                    <li <c:if test="${pageInfo.pageNum == item}">class="active" </c:if>><%--显示选中的页数--%>
+                                        <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${item}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">${item}</a>
+                                    </li>
+                                </c:forEach>
+                            </c:if>
+                            <li>
+                                <c:if test="${pageInfo.pageNum==pageInfo.pages}">
+                                    <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">下一页</a>
+                                </c:if>
+                                <c:if test="${pageInfo.pageNum<pageInfo.pages}">
+                                    <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.nextPage}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">下一页</a>
+                                </c:if>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}" aria-label="Next">尾页</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.box-footer-->
             </div>
         </section>
         <!-- 正文区域 /-->
@@ -202,6 +241,18 @@
         $(".textarea").wysihtml5({
             locale: 'zh-CN'
         });
+
+        //设置每页显示条数
+        var opts = $('#selectbypage').find('option');
+        opts.each(function () {
+            if($(this).val() == ${pageInfo.pageSize}) {
+                $(this).attr('selected', true);
+            }
+        });
+        $("#selectbypage").change(function () {
+            var selectpage = $("#selectbypage").val();
+            location.href="${pageContext.request.contextPath}/syslog/findAll.do?page=1&size="+selectpage+"&fuzzyName=${fuzzyName}";
+        });
     });
     // 设置激活菜单
     function setSidebarActive(tagUri) {
@@ -212,34 +263,6 @@
         }
     }
     $(document).ready(function() {
-        // datetime picker
-        $('#dateTimePicker').datetimepicker({
-            format: "yyyy-mm-dd hh:ii",
-            autoclose: true,
-            todayBtn: true,
-            language: 'zh-CN'
-        });
-        //产品信息
-        var productIdValue = ${orders.product.id};
-        $("#productIdList option").each(function () {
-            var value = $(this).val();
-            console.log(value);
-            if (productIdValue == value){
-                $(this).attr('selected','selected');
-            }
-        });
-        //会员信息
-        var memberIdValue = ${orders.member.id};
-        $("#memberIdList option").each(function () {
-            var value = $(this).val();
-            console.log(value);
-            if (memberIdValue == value){
-                $(this).attr('selected','selected');
-            }
-        });
-    });
-
-    $(document).ready(function() {
         // 激活导航位置
         setSidebarActive("admin-datalist");
         // 列表按钮
@@ -247,7 +270,7 @@
             checkboxClass: 'icheckbox_square-blue',
             increaseArea: '20%'
         });
-        // 全选操作 
+        // 全选操作
         $("#selall").click(function() {
             var clicks = $(this).is(':checked');
             if (!clicks) {
