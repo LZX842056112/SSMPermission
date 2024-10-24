@@ -6,11 +6,13 @@ import com.itheima.domain.Role;
 import com.itheima.domain.UserInfo;
 import com.itheima.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -23,6 +25,39 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+
+    /**
+     * 用户添加角色，只有lzx用户可操作
+     * @param userId
+     * @param roleIds
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/addRoleToUser.do")
+    @PreAuthorize("authentication.principal.username == 'lzx'")
+    public String addRoleToUser(@RequestParam(value = "userId") String userId,@RequestParam(value = "ids",defaultValue = "") String[] roleIds) throws Exception {
+        if (roleIds != null && !"".equals(roleIds)){
+            userService.addRoleToUser(userId,roleIds);
+        }
+        return "redirect:findAll.do";
+    }
+
+    /**
+     * 添加角色前，查询所有当前该用户没有关联的角色，只有lzx用户可操作
+     * @param id
+     * @return
+     */
+    @RequestMapping("/findUserByIdAndAllRole.do")
+    @PreAuthorize("authentication.principal.username == 'lzx'")
+    public ModelAndView findUserByIdAndAllRole(@RequestParam(value = "id") String id) throws Exception {
+        ModelAndView mv = new ModelAndView();
+        List<Role> roleList = userService.findUserByIdAndAllRole(id);
+        UserInfo userInfo = userService.findById(id);
+        mv.addObject("roleList",roleList);
+        mv.addObject("userInfo",userInfo);
+        mv.setViewName("user-role-add");
+        return mv;
+    }
 
     /**
      * 用户详情
@@ -45,11 +80,12 @@ public class UserController {
     }
 
     /**
-     * 添加用户
+     * 添加用户，只有lzx用户可操作
      * @param userInfo
      * @return
      */
     @RequestMapping("/addUser.do")
+    @PreAuthorize("authentication.principal.username == 'lzx'")
     public String addUser(UserInfo userInfo) throws Exception {
         userService.addUser(userInfo);
         return "redirect:findAll.do";
@@ -64,9 +100,14 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping("/findAll.do")
-    public ModelAndView findAll(@RequestParam(value = "page",defaultValue = "1",required = false) String page,@RequestParam(value = "size",defaultValue = "4",required = false) String size,@RequestParam(value = "fuzzyName",defaultValue = "",required = false) String fuzzyName) throws Exception {
+    public ModelAndView findAll(@RequestParam(value = "page",defaultValue = "1") Integer page,@RequestParam(value = "size",defaultValue = "4") Integer size,@RequestParam(value = "fuzzyName",defaultValue = "",required = false) String fuzzyName) throws Exception {
         ModelAndView mv = new ModelAndView();
-        List<UserInfo> userInfoList = userService.findAll(Integer.parseInt(page), Integer.parseInt(size),fuzzyName);
+        //判断是乱码 (GBK包含全部中文字符；UTF-8则包含全世界所有国家需要用到的字符。)
+        if (!(Charset.forName("GBK").newEncoder().canEncode(fuzzyName))) {
+            //转码UTF8
+            fuzzyName = new String(fuzzyName.getBytes("ISO-8859-1"), "utf-8");
+        }
+        List<UserInfo> userInfoList = userService.findAll(page,size,fuzzyName);
         PageInfo pageInfo = new PageInfo(userInfoList);
         mv.addObject("userInfoList",userInfoList);
         mv.addObject("fuzzyName",fuzzyName);

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Title</title>
@@ -14,7 +15,9 @@
                     <img src="${pageContext.request.contextPath}/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>张猿猿</p>
+                    <p>
+                        <security:authentication property="principal.username"></security:authentication>
+                    </p>
                     <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
                 </div>
             </div>
@@ -39,13 +42,22 @@
                             </a>
                         </li>
                         <li id="admin-role">
-                            <a href="${pageContext.request.contextPath}/role/findAll.do">
-                                <i class="fa fa-circle-o"></i> 角色管理
-                            </a>
+                            <security:authorize access="hasRole('ADMIN')">
+                                <a href="${pageContext.request.contextPath}/role/findAll.do">
+                                    <i class="fa fa-circle-o"></i> 角色管理
+                                </a>
+                            </security:authorize>
                         </li>
                         <li id="admin-permission">
-                            <a href="${pageContext.request.contextPath}/permission/findAll.do">
-                                <i class="fa fa-circle-o"></i> 权限管理
+                            <security:authorize access="hasRole('ADMIN')">
+                                <a href="${pageContext.request.contextPath}/permission/findAll.do">
+                                    <i class="fa fa-circle-o"></i> 资源权限管理
+                                </a>
+                            </security:authorize>
+                        </li>
+                        <li id="admin-log">
+                            <a href="${pageContext.request.contextPath}/syslog/findAll.do">
+                                <i class="fa fa-circle-o"></i> 日志管理
                             </a>
                         </li>
                     </ul>

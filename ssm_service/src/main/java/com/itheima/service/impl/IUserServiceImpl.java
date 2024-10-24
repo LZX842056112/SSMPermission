@@ -33,6 +33,30 @@ public class IUserServiceImpl implements IUserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     /**
+     * 用户添加角色
+     * @param userId
+     * @param roleIds
+     * @throws Exception
+     */
+    @Override
+    public void addRoleToUser(String userId, String[] roleIds) throws Exception {
+        for(String roleId : roleIds){
+            userDao.addRoleToUser(userId,roleId);
+        }
+    }
+
+    /**
+     * 添加角色前，查询所有当前该用户没有关联的角色
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Role> findUserByIdAndAllRole(String id) throws Exception {
+        return userDao.findUserByIdAndAllRole(id);
+    }
+
+    /**
      * 用户详情
      * @param id
      * @return

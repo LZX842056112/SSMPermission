@@ -119,7 +119,6 @@
                                         <td>${order.orderStatusStr}</td>
                                         <td class="text-center">
                                             <a href="${pageContext.request.contextPath}/orders/findById.do?id=${order.id}" class="btn bg-olive btn-xs">详情</a>
-                                            <a href="${pageContext.request.contextPath}/orders/findAllById.do?id=${order.id}" class="btn bg-olive btn-xs">编辑</a>
                                             <a onclick="delById('${order.id}')" class="btn bg-olive btn-xs">删除</a>
                                         </td>
                                     </tr>
@@ -149,15 +148,40 @@
                     <div class="box-tools pull-right">
                         <ul class="pagination">
                             <li>
-                                <a href="${pageContext.request.contextPath}/orders/findAll.do?page=1&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}" aria-label="Previous">首页</a>
+                                <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=1&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}" aria-label="Previous">首页</a>
                             </li>
-                            <li><a href="${pageContext.request.contextPath}/orders/findAll.do?page=${pageInfo.prePage}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">上一页</a></li>
-                            <c:forEach begin="1" end="${pageInfo.pages}" var="item">
-                                <li><a href="${pageContext.request.contextPath}/orders/findAll.do?page=${item}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">${item}</a></li>
-                            </c:forEach>
-                            <li><a href="${pageContext.request.contextPath}/orders/findAll.do?page=${pageInfo.nextPage}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">下一页</a></li>
                             <li>
-                                <a href="${pageContext.request.contextPath}/orders/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}" aria-label="Next">尾页</a>
+                                <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.prePage}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">上一页</a>
+                            </li>
+                            <c:if test="${pageInfo.pageNum > pageInfo.pages - 4 && pageInfo.pages >= 10}">
+                                <c:forEach begin="${pageInfo.pages-9}" end="${pageInfo.pageNum-6}" var="item">
+                                    <li <c:if test="${pageInfo.pageNum == item}">class="active" </c:if>><%--显示选中的页数--%>
+                                        <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${item}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">${item}</a>
+                                    </li>
+                                </c:forEach>
+                            </c:if>
+                            <c:forEach begin="${pageInfo.pageNum <= 6 ? 1 : pageInfo.pageNum - 5}" end="${pageInfo.pageNum >= pageInfo.pages-4 ? pageInfo.pages : pageInfo.pageNum + 4}" var="item">
+                                <li <c:if test="${pageInfo.pageNum == item}">class="active" </c:if>><%--显示选中的页数--%>
+                                    <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${item}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">${item}</a>
+                                </li>
+                            </c:forEach>
+                            <c:if test="${pageInfo.pageNum < 6 && pageInfo.pages >= 10}">
+                                <c:forEach begin="${pageInfo.pageNum+5}" end="10" var="item">
+                                    <li <c:if test="${pageInfo.pageNum == item}">class="active" </c:if>><%--显示选中的页数--%>
+                                        <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${item}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">${item}</a>
+                                    </li>
+                                </c:forEach>
+                            </c:if>
+                            <li>
+                                <c:if test="${pageInfo.pageNum==pageInfo.pages}">
+                                    <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">下一页</a>
+                                </c:if>
+                                <c:if test="${pageInfo.pageNum<pageInfo.pages}">
+                                    <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.nextPage}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}">下一页</a>
+                                </c:if>
+                            </li>
+                            <li>
+                                <a href="${pageContext.request.contextPath}/syslog/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}&fuzzyName=${fuzzyName}" aria-label="Next">尾页</a>
                             </li>
                         </ul>
                     </div>
@@ -225,8 +249,8 @@
         if(confirm("确定要删除该条数据吗？")){
             $("input:checkbox[name=ids]:checked").each(function () {
                 str += $(this).val()+",";
-                location.href="${pageContext.request.contextPath}/orders/deleteByIdStr.do?idStr="+str;
             });
+            location.href="${pageContext.request.contextPath}/orders/deleteByIdStr.do?idStr="+str;
         }
     }
 
@@ -252,7 +276,7 @@
                 $(this).attr('selected', true);
             }
         });
-        $("#selectbypage").click(function () {
+        $("#selectbypage").change(function () {
             var selectpage = $("#selectbypage").val();
             location.href="${pageContext.request.contextPath}/orders/findAll.do?page=1&size="+selectpage+"&fuzzyName=${fuzzyName}";
         });

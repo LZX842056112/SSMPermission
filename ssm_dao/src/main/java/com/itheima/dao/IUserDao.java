@@ -1,5 +1,6 @@
 package com.itheima.dao;
 
+import com.itheima.domain.Role;
 import com.itheima.domain.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,6 +11,23 @@ import java.util.List;
  * @create 2020/6/4 22:30
  */
 public interface IUserDao {
+
+    /**
+     * 用户添加角色
+     * @param userId
+     * @param roleId
+     * @throws Exception
+     */
+    public void addRoleToUser(@Param("userId") String userId,@Param("roleId") String roleId) throws Exception;
+
+    /**
+     * 添加角色前，查询所有当前该用户没有关联的角色
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public List<Role> findUserByIdAndAllRole(String id) throws Exception;
+
     /**
      * 用户详情
      * @param id
