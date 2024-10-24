@@ -6,7 +6,7 @@
     <!-- 页面meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>产品列表</title>
+    <title>订单列表</title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
     <!-- Tell the browser to be responsive to screen width -->
@@ -48,13 +48,13 @@
         <!-- 内容头部 -->
         <section class="content-header">
             <h1>
-                产品管理
-                <small>产品列表</small>
+                订单管理
+                <small>订单列表</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="${pageContext.request.contextPath}/pages/main.jsp"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li><a href="${pageContext.request.contextPath}/product/findAll.do">产品管理</a></li>
-                <li class="active">产品列表</li>
+                <li><a href="${pageContext.request.contextPath}/orders/findAll.do">订单管理</a></li>
+                <li class="active">订单列表</li>
             </ol>
         </section>
         <!-- 内容头部 /-->
@@ -63,7 +63,7 @@
             <!-- .box-body -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">产品列表</h3>
+                    <h3 class="box-title">订单列表</h3>
                 </div>
                 <div class="box-body">
                     <!-- 数据表格 -->
@@ -72,7 +72,7 @@
                         <div class="pull-left">
                             <div class="form-group form-inline">
                                 <div class="btn-group">
-                                    <a href="${pageContext.request.contextPath}/pages/product-add.jsp" type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</a>
+                                    <a href="${pageContext.request.contextPath}/orders/selectproAndMen.do" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</a>
                                     <a onclick="delByCheck()" type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</a>
                                     <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
                                 </div>
@@ -80,8 +80,8 @@
                         </div>
                         <div class="box-tools pull-right">
                             <div class="has-feedback">
-                                <form action="${pageContext.request.contextPath}/product/findAll.do" method="post">
-                                    <input type="text" name="fuzzyName" class="form-control input-sm" value="${fuzzyName}" placeholder="产品名称搜索"/>
+                                <form action="${pageContext.request.contextPath}/orders/findAll.do" method="post">
+                                    <input type="text" name="fuzzyName" class="form-control input-sm" value="${fuzzyName}" placeholder="订单名称搜索"/>
                                     <span type="submit" class="bg-maroon glyphicon glyphicon-search form-control-feedback"></span>
                                 </form>
                             </div>
@@ -94,32 +94,32 @@
                                     <th class="" style="padding-right:0px;">
                                         <input id="selall" type="checkbox" class="icheckbox_square-blue">
                                     </th>
-                                    <th>产品ID</th>
-                                    <th>产品编号</th>
+                                    <th>订单ID</th>
+                                    <th>订单编号</th>
                                     <th>产品名称</th>
-                                    <th>出发城市</th>
-                                    <th>出发时间</th>
-                                    <th>产品价格</th>
-                                    <th>产品描述</th>
-                                    <th>状态</th>
+                                    <th>下单时间</th>
+                                    <th>会员姓名</th>
+                                    <th>出行人数</th>
+                                    <th>支付方式</th>
+                                    <th>订单状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${productList}" var="product">
+                                <c:forEach items="${ordersList}" var="order">
                                     <tr>
-                                        <td><input value="${product.id}" name="ids" type="checkbox"></td>
-                                        <td>${product.id}</td>
-                                        <td>${product.productNum}</td>
-                                        <td>${product.productName}</td>
-                                        <td>${product.cityName}</td>
-                                        <td>${product.departureTimeStr}</td>
-                                        <td>${product.productPrice}</td>
-                                        <td>${product.productDesc}</td>
-                                        <td>${product.productStatusStr}</td>
+                                        <td><input value="${order.id}" name="ids" type="checkbox"></td>
+                                        <td>${order.id}</td>
+                                        <td>${order.orderNum}</td>
+                                        <td>${order.product.productName}</td>
+                                        <td>${order.orderTimeStr}</td>
+                                        <td>${order.member.name}</td>
+                                        <td>${order.peopleCount}</td>
+                                        <td>${order.payTypeStr}</td>
+                                        <td>${order.orderStatusStr}</td>
                                         <td class="text-center">
-                                            <a href="${pageContext.request.contextPath}/product/findById.do?id=${product.id}" class="btn bg-olive btn-xs">编辑</a>
-                                            <a onclick="delById('${product.id}')" class="btn bg-olive btn-xs">删除</a>
+                                            <a href="${pageContext.request.contextPath}/orders/findById.do?id=${order.id}" class="btn bg-olive btn-xs">详情</a>
+                                            <a onclick="delById('${order.id}')" class="btn bg-olive btn-xs">删除</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -250,14 +250,14 @@
             $("input:checkbox[name=ids]:checked").each(function () {
                 str += $(this).val()+",";
             });
-            location.href="${pageContext.request.contextPath}/product/deleteByIdStr.do?idStr="+str;
+            location.href="${pageContext.request.contextPath}/orders/deleteByIdStr.do?idStr="+str;
         }
     }
 
     //删除单条数据
     function delById(id){
         if(confirm("确定要删除该条数据吗？")){
-            location.href="${pageContext.request.contextPath}/product/deleteById.do?id="+id;
+            location.href="${pageContext.request.contextPath}/orders/deleteById.do?id="+id;
         }
     }
 
@@ -278,7 +278,7 @@
         });
         $("#selectbypage").change(function () {
             var selectpage = $("#selectbypage").val();
-            location.href="${pageContext.request.contextPath}/product/findAll.do?page=1&size="+selectpage+"&fuzzyName=${fuzzyName}";
+            location.href="${pageContext.request.contextPath}/orders/findAll.do?page=1&size="+selectpage+"&fuzzyName=${fuzzyName}";
         });
     });
     // 设置激活菜单
